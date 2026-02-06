@@ -5,89 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>助记词扫描器 v1.0</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* ==================== 全局样式 ==================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #0a0e14 0%, #141922 100%);
             color: #e6edf3;
             line-height: 1.6;
             min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
         }
         
-        /* 头部 */
+        /* ==================== 头部样式 ==================== */
         .header {
             text-align: center;
             margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            position: relative;
         }
-        
         .header h1 {
-            font-size: 36px;
-            background: linear-gradient(90deg, #58a6ff 0%, #8957e5 100%);
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ffcc00 0%, #ffaa00 50%, #ffcc00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            font-weight: 700;
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
         }
-        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 170, 0, 0.8); }
+        }
         .header .version {
-            font-size: 14px;
-            color: #7d8590;
-            background: rgba(22, 27, 34, 0.8);
-            padding: 4px 12px;
-            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #ffaa00;
+            background: rgba(22, 27, 34, 0.9);
+            padding: 6px 15px;
+            border-radius: 20px;
             display: inline-block;
+            border: 1px solid rgba(255, 170, 0, 0.3);
+            font-weight: 600;
+        }
+        .header .subtitle {
+            margin-top: 10px;
+            color: #7d8590;
+            font-size: 0.95rem;
         }
         
-        /* 状态横幅 */
+        /* ==================== 状态横幅 ==================== */
         .status-banner {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 18px 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .status-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+            animation: scanLine 3s linear infinite;
+        }
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .btc-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            background: rgba(247, 147, 26, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(247, 147, 26, 0.3);
+            gap: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(255, 204, 0, 0.15) 0%, rgba(255, 170, 0, 0.15) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            position: relative;
+            z-index: 1;
         }
-        
         .btc-icon {
-            font-size: 26px;
-            color: #f7931a;
-            filter: drop-shadow(0 0 8px rgba(247, 147, 26, 0.3));
+            font-size: 1.8rem;
+            color: #ffcc00;
+            filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+            animation: pulse 1.5s ease-in-out infinite;
         }
-        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
         .btc-amount {
-            font-size: 22px;
-            font-weight: 700;
-            color: #f7931a;
-            text-shadow: 0 0 10px rgba(247, 147, 26, 0.3);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
         }
         
         .api-status-container {
@@ -96,56 +127,66 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        
         .api-status {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            background: rgba(88, 166, 255, 0.1);
-            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: rgba(255, 204, 0, 0.15);
+            border: 2px solid rgba(255, 204, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-        
         .api-status.online {
-            background: rgba(63, 185, 80, 0.15);
-            border-color: rgba(63, 185, 80, 0.4);
+            background: rgba(63, 185, 80, 0.2);
+            border-color: rgba(63, 185, 80, 0.5);
         }
-        
         .api-status.offline {
-            background: rgba(218, 54, 51, 0.15);
-            border-color: rgba(218, 54, 51, 0.4);
+            background: rgba(218, 54, 51, 0.2);
+            border-color: rgba(218, 54, 51, 0.5);
         }
-        
         .api-status.connecting {
-            background: rgba(243, 191, 64, 0.15);
-            border-color: rgba(243, 191, 64, 0.4);
+            background: rgba(243, 191, 64, 0.2);
+            border-color: rgba(243, 191, 64, 0.5);
         }
-        
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             display: inline-block;
             animation: pulse 2s infinite;
+            position: relative;
         }
-        
+        .status-dot::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            opacity: 0.5;
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
         .status-dot.online {
             background: #3fb950;
-            box-shadow: 0 0 10px #3fb950;
+            box-shadow: 0 0 15px #3fb950;
         }
-        
         .status-dot.offline {
             background: #da3633;
-            box-shadow: 0 0 10px #da3633;
+            box-shadow: 0 0 15px #da3633;
         }
-        
         .status-dot.connecting {
             background: #f3bf40;
-            box-shadow: 0 0 10px #f3bf40;
-            animation: pulse-fast 1s infinite;
+            box-shadow: 0 0 15px #f3bf40;
         }
         
         .queue-info {
@@ -153,38 +194,124 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: rgba(137, 87, 229, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(137, 87, 229, 0.3);
-            font-size: 13px;
-            font-weight: 500;
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 140, 0, 0.15) 100%);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 170, 0, 0.4);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .queue-count {
+            font-weight: 800;
+            color: #ffaa00;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
         }
         
-        .queue-count {
+        .alarm-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 140, 0, 0.15) 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(255, 170, 0, 0.4);
+        }
+        
+        .alarm-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #ffaa00;
+        }
+        
+        .toggle-slider {
+            width: 50px;
+            height: 26px;
+            background: #30363d;
+            border-radius: 26px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-dot {
+            width: 22px;
+            height: 22px;
+            background: #7d8590;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .alarm-toggle.active .toggle-slider {
+            background: rgba(255, 204, 0, 0.3);
+        }
+        
+        .alarm-toggle.active .toggle-dot {
+            transform: translateX(24px);
+            background: #ffcc00;
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.7);
+        }
+        
+        .test-alarm-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #0a0e14;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
             font-weight: 700;
-            color: #8957e5;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .test-alarm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
         }
         
         .reconnect-btn {
-            padding: 8px 16px;
-            background: linear-gradient(90deg, #8957e5 0%, #9e6cfc 100%);
-            color: white;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #0a0e14;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .reconnect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .reconnect-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(137, 87, 229, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
         }
-        
+        .reconnect-btn:hover::before {
+            left: 100%;
+        }
         .reconnect-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
@@ -192,698 +319,1063 @@
             box-shadow: none !important;
         }
         
-        .alarm-control {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 16px;
-            background: rgba(137, 87, 229, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(137, 87, 229, 0.3);
-        }
-        
-        .alarm-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        
-        .toggle-slider {
-            width: 46px;
-            height: 24px;
-            background: #30363d;
-            border-radius: 24px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .toggle-dot {
-            width: 20px;
-            height: 20px;
-            background: #7d8590;
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .alarm-toggle.active .toggle-slider {
-            background: rgba(218, 54, 51, 0.3);
-        }
-        
-        .alarm-toggle.active .toggle-dot {
-            transform: translateX(22px);
-            background: #da3633;
-            box-shadow: 0 0 10px #da3633;
-        }
-        
-        .test-alarm-btn {
-            padding: 8px 16px;
-            background: linear-gradient(90deg, #8957e5 0%, #9e6cfc 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        
-        .test-alarm-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(137, 87, 229, 0.3);
-        }
-        
-        /* 控制面板 */
+        /* ==================== 控制面板 ==================== */
         .control-panel {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .control-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
         
         .button-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
         }
-        
         .btn {
-            padding: 14px 28px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            min-width: 150px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
-        
+        .btn:hover::before {
+            left: 100%;
+        }
         .btn:active {
             transform: translateY(-1px);
         }
-        
-        .btn-start {
-            background: linear-gradient(90deg, #238636 0%, #2ea043 100%);
-            color: white;
-        }
-        
-        .btn-start:disabled {
-            background: #30363d;
-            color: #7d8590;
+        .btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
         }
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
         
+        .btn-start {
+            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            color: white;
+        }
         .btn-pause {
-            background: linear-gradient(90deg, #da3633 0%, #f85149 100%);
+            background: linear-gradient(135deg, #da3633 0%, #f85149 100%);
             color: white;
         }
-        
         .btn-continue {
-            background: linear-gradient(90deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
             color: white;
         }
-        
         .btn-stats {
-            background: linear-gradient(90deg, #8957e5 0%, #9e6cfc 100%);
-            color: white;
+            background: linear-gradient(135deg, #ffaa00 0%, #ffcc00 100%);
+            color: #0a0e14;
         }
-        
         .btn-export {
-            background: linear-gradient(90deg, #0e8a16 0%, #1a9c24 100%);
+            background: linear-gradient(135deg, #0e8a16 0%, #1a9c24 100%);
             color: white;
         }
-        
         .btn-reconnect {
-            background: linear-gradient(90deg, #f7931a 0%, #f9a53c 100%);
-            color: white;
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #0a0e14;
         }
         
+        /* ==================== 速度控制 ==================== */
         .speed-control {
-            margin-top: 20px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(48, 54, 61, 0.6);
         }
-        
         .speed-control label {
             display: block;
-            margin-bottom: 10px;
-            color: #8b949e;
-            font-weight: 500;
+            margin-bottom: 15px;
+            color: #ffaa00;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .speed-control label::before {
+            content: '⚡';
+            font-size: 1.2rem;
         }
         
+        .speed-slider-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
         .speed-slider {
             width: 100%;
-            height: 10px;
+            height: 12px;
             -webkit-appearance: none;
             appearance: none;
-            background: linear-gradient(90deg, #58a6ff 0%, #8957e5 100%);
-            border-radius: 5px;
+            background: linear-gradient(90deg, #ffcc00 0%, #ffaa00 50%, #ffcc00 100%);
+            border-radius: 10px;
             outline: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
         }
-        
         .speed-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: white;
             cursor: pointer;
-            border: 3px solid #58a6ff;
-            box-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+            border: 3px solid #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+        .speed-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 1);
+        }
+        .speed-slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
         }
         
-        .speed-value {
-            color: #58a6ff;
-            font-weight: bold;
-            font-size: 16px;
+        .speed-value-display {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            pointer-events: none;
+            z-index: 2;
         }
         
-        /* 速度选项 */
         .speed-options {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 20px;
             flex-wrap: wrap;
+            justify-content: center;
         }
-        
         .speed-btn {
-            padding: 8px 16px;
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
             color: #8b949e;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
         .speed-btn:hover {
-            background: rgba(48, 54, 61, 0.8);
-            color: #58a6ff;
+            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
+            color: #ffaa00;
+            border-color: rgba(255, 170, 0, 0.5);
+            transform: translateY(-2px);
         }
-        
         .speed-btn.active {
-            background: linear-gradient(90deg, #58a6ff 0%, #8957e5 100%);
-            color: white;
-            border-color: #58a6ff;
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            color: #0a0e14;
+            border-color: #ffcc00;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+        }
+        .speed-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.6);
         }
         
+        .speed-description {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(33, 38, 45, 0.7);
+            border-radius: 10px;
+            border-left: 4px solid #ffaa00;
+            font-size: 0.9rem;
+            color: #7d8590;
+            line-height: 1.5;
+        }
+        
+        /* ==================== API信息 ==================== */
         .api-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(48, 54, 61, 0.6);
-            font-size: 13px;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(48, 54, 61, 0.6);
+            font-size: 0.9rem;
             flex-wrap: wrap;
+            justify-content: center;
         }
-        
-        .api-provider {
-            padding: 6px 12px;
-            border-radius: 6px;
-            background: rgba(22, 27, 34, 0.8);
-            color: #8b949e;
+        .api-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(33, 38, 45, 0.7);
+            border-radius: 8px;
             border: 1px solid rgba(48, 54, 61, 0.6);
+        }
+        .api-info-label {
+            color: #7d8590;
             font-weight: 500;
         }
-        
+        .api-info-value {
+            color: #ffaa00;
+            font-weight: 700;
+        }
+        .api-provider {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(33, 38, 45, 0.9) 100%);
+            color: #ffaa00;
+            border: 2px solid rgba(255, 170, 0, 0.5);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         .api-provider.active {
-            background: rgba(63, 185, 80, 0.15);
+            background: linear-gradient(135deg, rgba(63, 185, 80, 0.2) 0%, rgba(63, 185, 80, 0.1) 100%);
             color: #3fb950;
-            border-color: rgba(63, 185, 80, 0.4);
+            border-color: rgba(63, 185, 80, 0.6);
+        }
+        .api-provider.active::before {
+            content: '✓';
+            color: #3fb950;
+            font-weight: bold;
         }
         
-        /* 统计信息 */
+        /* ==================== 统计面板 ==================== */
         .stats-panel {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .stats-panel::before {
+            content: '📊';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
         }
         
         .panel-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 25px;
+            position: relative;
         }
-        
         .panel-header h3 {
-            color: #58a6ff;
-            font-size: 18px;
-            font-weight: 600;
+            color: #ffaa00;
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
         .panel-icon {
-            font-size: 20px;
+            font-size: 1.5rem;
+            color: #ffaa00;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+            gap: 20px;
         }
-        
         .stat-card {
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
+            border-radius: 12px;
+            padding: 25px 20px;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
         }
-        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffcc00, #ffaa00);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
         .stat-card:hover {
-            transform: translateY(-2px);
-            border-color: #58a6ff;
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: #ffcc00;
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
+        }
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+        .stat-card.highlight {
+            background: linear-gradient(135deg, rgba(255, 204, 0, 0.1) 0%, rgba(255, 170, 0, 0.1) 100%);
+            border-color: rgba(255, 204, 0, 0.5);
+        }
+        .stat-card.highlight:hover {
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.5);
         }
         
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #58a6ff;
-            margin-bottom: 8px;
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            font-family: 'Consolas', 'Monaco', monospace;
         }
-        
+        .stat-card.highlight .stat-value {
+            color: #3fb950;
+            text-shadow: 0 0 15px rgba(63, 185, 80, 0.5);
+        }
         .stat-label {
-            font-size: 12px;
-            color: #7d8590;
+            font-size: 0.85rem;
+            color: #ffcc00;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
         
-        /* 当前扫描 */
+        /* ==================== 当前扫描面板 ==================== */
         .current-scan {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .current-scan::after {
+            content: '🎯';
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.2;
+            transform: rotate(15deg);
         }
         
         .scan-info {
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 10px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .scan-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
         }
         
         .info-row {
             display: flex;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
             border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+            align-items: flex-start;
         }
-        
         .info-row:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
-        
         .info-label {
-            width: 120px;
-            font-weight: 600;
-            color: #7d8590;
+            width: 100px;
+            font-weight: 700;
+            color: #ffaa00;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            padding-top: 2px;
         }
-        
         .info-value {
             flex: 1;
             word-break: break-all;
             font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
-        
         .mnemonic-value {
-            color: #f0883e;
+            color: #ffcc00;
             font-weight: 600;
+            background: rgba(255, 204, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
-        
         .address-value {
             color: #58a6ff;
             font-weight: 500;
+            background: rgba(88, 166, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(88, 166, 255, 0.3);
         }
-        
         .private-key-value {
             color: #d2a8ff;
             font-weight: 500;
+            background: rgba(210, 168, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(210, 168, 255, 0.3);
         }
-        
         .balance-value {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 900;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            min-width: 200px;
+            text-align: center;
         }
-        
         .balance-positive {
             color: #3fb950;
-            text-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
+            background: rgba(63, 185, 80, 0.15);
+            border: 2px solid rgba(63, 185, 80, 0.5);
+            text-shadow: 0 0 15px rgba(63, 185, 80, 0.5);
+            animation: balanceGlow 2s infinite alternate;
         }
-        
+        @keyframes balanceGlow {
+            from { box-shadow: 0 0 10px rgba(63, 185, 80, 0.3); }
+            to { box-shadow: 0 0 20px rgba(63, 185, 80, 0.7); }
+        }
         .balance-zero {
             color: #7d8590;
+            background: rgba(125, 133, 144, 0.1);
+            border: 2px solid rgba(125, 133, 144, 0.3);
         }
-        
         .balance-failed {
             color: #da3633;
+            background: rgba(218, 54, 51, 0.15);
+            border: 2px solid rgba(218, 54, 51, 0.5);
+        }
+        .balance-checking {
+            color: #f3bf40;
+            background: rgba(243, 191, 64, 0.15);
+            border: 2px solid rgba(243, 191, 64, 0.5);
         }
         
         .action-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 25px;
             flex-wrap: wrap;
         }
-        
         .action-btn {
-            padding: 10px 18px;
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
             color: #e6edf3;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .action-btn:hover {
-            background: rgba(48, 54, 61, 0.8);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
+            transform: translateY(-3px);
+            border-color: #ffcc00;
+        }
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        .action-btn:active {
+            transform: translateY(-1px);
         }
         
-        /* 巡查面板 */
+        /* ==================== 巡查面板 ==================== */
         .patrol-panel {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 12px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .patrol-panel::before {
+            content: '🔍';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
         }
         
         .patrol-controls {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            align-items: center;
         }
-        
-        .patrol-controls input,
-        .patrol-controls select {
-            padding: 10px 14px;
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 6px;
+        .patrol-controls input, .patrol-controls select {
+            padding: 12px 18px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
+            border-radius: 8px;
             color: #e6edf3;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .patrol-controls input:focus,
-        .patrol-controls select:focus {
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
             outline: none;
-            border-color: #58a6ff;
-            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
         }
-        
+        .patrol-controls input:focus, .patrol-controls select:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+        }
+        .patrol-controls input::placeholder {
+            color: #7d8590;
+        }
         .patrol-controls button {
-            padding: 10px 18px;
-            background: linear-gradient(90deg, #1f6feb 0%, #2a7bf0 100%);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .patrol-controls button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .patrol-controls button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(31, 111, 235, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(31, 111, 235, 0.4);
+        }
+        .patrol-controls button:hover::before {
+            left: 100%;
         }
         
         .table-container {
             max-height: 400px;
             overflow-y: auto;
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 8px;
+            border: 2px solid rgba(48, 54, 61, 0.8);
+            border-radius: 10px;
             background: rgba(22, 27, 34, 0.8);
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #ffcc00 rgba(33, 38, 45, 0.8);
+        }
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: rgba(33, 38, 45, 0.8);
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            border-radius: 4px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ffaa00 0%, #ffcc00 100%);
         }
         
         .patrol-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
-        
         .patrol-table th {
-            background: rgba(33, 38, 45, 0.9);
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.95) 0%, rgba(48, 54, 61, 0.95) 100%);
             position: sticky;
             top: 0;
-            padding: 16px;
+            padding: 18px 15px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             color: #7d8590;
-            border-bottom: 2px solid rgba(48, 54, 61, 0.6);
-            font-size: 13px;
+            border-bottom: 3px solid rgba(48, 54, 61, 0.8);
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            z-index: 10;
         }
-        
         .patrol-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.4);
-            font-size: 14px;
+            padding: 15px;
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            transition: all 0.2s ease;
         }
-        
+        .patrol-table tr {
+            transition: all 0.2s ease;
+        }
         .patrol-table tr:hover {
-            background: rgba(88, 166, 255, 0.1);
+            background: rgba(255, 204, 0, 0.1);
+            transform: translateX(5px);
         }
-        
         .patrol-table tr.has-balance {
             background: rgba(63, 185, 80, 0.1);
         }
-        
         .patrol-table tr.has-balance:hover {
             background: rgba(63, 185, 80, 0.15);
+        }
+        .patrol-table tr.failed {
+            background: rgba(218, 54, 51, 0.1);
+        }
+        .patrol-table tr.failed:hover {
+            background: rgba(218, 54, 51, 0.15);
         }
         
         .mnemonic-cell {
             max-width: 200px;
             word-break: break-word;
-            color: #f0883e;
+            color: #ffcc00;
+            font-weight: 500;
+            line-height: 1.4;
         }
-        
         .address-cell {
-            font-family: monospace;
-            font-size: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
             color: #58a6ff;
+            letter-spacing: 0.5px;
         }
-        
         .balance-cell {
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1rem;
         }
-        
         .balance-cell.positive {
             color: #3fb950;
+            text-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
         }
-        
         .balance-cell.zero {
             color: #7d8590;
         }
-        
         .balance-cell.failed {
             color: #da3633;
         }
-        
         .table-btn {
-            padding: 6px 12px;
-            background: linear-gradient(90deg, #1f6feb 0%, #2a7bf0 100%);
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .table-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .table-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(31, 111, 235, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(31, 111, 235, 0.4);
+        }
+        .table-btn:hover::before {
+            left: 100%;
         }
         
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 25px;
         }
-        
         .page-btn {
-            padding: 8px 14px;
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
             color: #e6edf3;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 45px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .page-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
         .page-btn:hover {
-            background: rgba(48, 54, 61, 0.8);
+            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
+            border-color: #ffcc00;
+            transform: translateY(-2px);
         }
-        
+        .page-btn:hover::before {
+            left: 100%;
+        }
         .page-btn.active {
-            background: linear-gradient(90deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
             color: white;
             border-color: #1f6feb;
+            box-shadow: 0 4px 12px rgba(31, 111, 235, 0.4);
+        }
+        .page-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(31, 111, 235, 0.6);
         }
         
-        /* 发现余额 */
+        /* ==================== 发现余额面板 ==================== */
         .found-balances {
-            background: rgba(22, 27, 34, 0.9);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(240, 136, 62, 0.6);
-            border-radius: 12px;
-            padding: 24px;
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 204, 0, 0.8);
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(240, 136, 62, 0.1);
+            box-shadow: 0 8px 32px rgba(255, 204, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .found-balances::before {
+            content: '💰';
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 4rem;
+            opacity: 0.2;
+            transform: rotate(15deg);
+        }
+        .found-balances::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 204, 0, 0.05) 50%, transparent 70%);
+            animation: shine 3s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         .found-balances h3 {
-            color: #f0883e;
-            margin-bottom: 20px;
-            font-size: 18px;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        #foundBalancesList {
+            position: relative;
+            z-index: 1;
         }
         
         .balance-item {
-            background: rgba(33, 38, 45, 0.8);
-            border: 1px solid rgba(48, 54, 61, 0.6);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.2s ease;
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
+            border: 2px solid rgba(48, 54, 61, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+        .balance-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3fb950, #2ea043);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
         .balance-item:hover {
-            transform: translateY(-2px);
-            border-color: #f0883e;
-            box-shadow: 0 4px 12px rgba(240, 136, 62, 0.2);
+            transform: translateY(-5px);
+            border-color: #3fb950;
+            box-shadow: 0 10px 25px rgba(63, 185, 80, 0.3);
         }
-        
-        .balance-item:last-child {
-            margin-bottom: 0;
+        .balance-item:hover::before {
+            transform: scaleX(1);
         }
         
         .balance-header {
             color: #3fb950;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-weight: 800;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.1rem;
         }
-        
         .balance-amount {
-            font-size: 32px;
+            font-size: 2.5rem;
             color: #3fb950;
-            font-weight: 700;
+            font-weight: 900;
             text-align: center;
-            margin: 20px 0;
-            text-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
+            margin: 25px 0;
+            text-shadow: 0 0 20px rgba(63, 185, 80, 0.5);
+            animation: amountGlow 2s infinite alternate;
+        }
+        @keyframes amountGlow {
+            from { text-shadow: 0 0 10px rgba(63, 185, 80, 0.5); }
+            to { text-shadow: 0 0 25px rgba(63, 185, 80, 0.8); }
         }
         
-        /* 通知弹窗 */
+        .balance-details {
+            background: rgba(33, 38, 45, 0.7);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .balance-detail-row {
+            display: flex;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .balance-detail-label {
+            width: 80px;
+            color: #7d8590;
+            font-weight: 500;
+        }
+        .balance-detail-value {
+            flex: 1;
+            color: #e6edf3;
+            font-family: 'Consolas', 'Monaco', monospace;
+            word-break: break-all;
+        }
+        .balance-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        /* ==================== 通知弹窗 ==================== */
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(63, 185, 80, 0.95) 0%, rgba(46, 160, 67, 0.95) 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
-            max-width: 400px;
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, rgba(255, 204, 0, 0.98) 0%, rgba(255, 170, 0, 0.98) 100%);
+            color: #0a0e14;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            max-width: 450px;
             display: none;
-            animation: slideIn 0.3s ease;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-origin: top right;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%) scale(0.9); opacity: 0; }
+            to { transform: translateX(0) scale(1); opacity: 1; }
         }
         
         .notification-header {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .notification-header::before {
+            content: '🎉';
+            font-size: 1.5rem;
         }
         
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .notification-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .notification-balance {
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            animation: notificationGlow 2s infinite alternate;
+        }
+        @keyframes notificationGlow {
+            from { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+            to { text-shadow: 0 2px 20px rgba(255, 255, 255, 0.2); }
         }
         
-        @keyframes pulse-fast {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .notification-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .notification-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #0a0e14;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        .notification-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .notification-btn.primary {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #0a0e14;
+            font-weight: 700;
         }
         
-        /* 加载动画 */
+        /* ==================== 加载动画 ==================== */
         .loading-spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(88, 166, 255, 0.3);
+            border: 2px solid rgba(255, 204, 0, 0.3);
             border-radius: 50%;
-            border-top-color: #58a6ff;
+            border-top-color: #ffcc00;
             animation: spin 1s linear infinite;
         }
         
@@ -891,73 +1383,61 @@
             to { transform: rotate(360deg); }
         }
         
-        /* 响应式设计 */
+        /* ==================== 响应式设计 ==================== */
+        @media (max-width: 1200px) {
+            .container { padding: 10px; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        @media (max-width: 992px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .button-group { justify-content: center; }
+            .btn { min-width: 140px; }
+            .action-buttons { flex-direction: column; }
+            .patrol-controls { flex-direction: column; }
+            .patrol-controls input, .patrol-controls select, .patrol-controls button { width: 100%; min-width: auto; }
+            .speed-options { justify-content: center; }
+            .speed-btn { min-width: 110px; }
+        }
+        
         @media (max-width: 768px) {
-            .status-banner {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 15px;
-            }
-            
-            .api-status-container {
-                justify-content: space-between;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .button-group {
-                justify-content: center;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-            
-            .patrol-controls {
-                flex-direction: column;
-            }
-            
-            .info-row {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .info-label {
-                width: 100%;
-                margin-bottom: 0;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .speed-options {
-                justify-content: center;
-            }
+            .header h1 { font-size: 2rem; }
+            .status-banner { flex-direction: column; align-items: stretch; gap: 15px; }
+            .api-status-container { justify-content: space-between; width: 100%; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .btn { padding: 12px 20px; font-size: 0.95rem; min-width: 130px; }
+            .info-row { flex-direction: column; gap: 10px; }
+            .info-label { width: 100%; }
+            .balance-value { font-size: 1.5rem; min-width: auto; }
+            .table-container { max-height: 300px; }
+            .patrol-table th, .patrol-table td { padding: 12px 10px; font-size: 0.85rem; }
+            .notification { max-width: 350px; }
+        }
+        
+        @media (max-width: 576px) {
+            .header h1 { font-size: 1.8rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .btn { min-width: 100%; margin-bottom: 10px; }
+            .button-group { gap: 10px; }
+            .speed-options { flex-direction: column; }
+            .speed-btn { width: 100%; }
+            .api-info { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .api-info-item { width: 100%; justify-content: space-between; }
+            .balance-amount { font-size: 2rem; }
+            .patrol-table th, .patrol-table td { padding: 10px 8px; font-size: 0.8rem; }
+            .mnemonic-cell { max-width: 120px; }
+            .notification { max-width: 300px; right: 10px; top: 10px; }
         }
         
         @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .patrol-table td,
-            .patrol-table th {
-                padding: 10px;
-                font-size: 12px;
-            }
-            
-            .header h1 {
-                font-size: 28px;
-            }
-            
-            .speed-btn {
-                padding: 6px 12px;
-                font-size: 12px;
-            }
+            .header h1 { font-size: 1.6rem; }
+            .btc-amount { font-size: 1.3rem; }
+            .stat-value { font-size: 1.8rem; }
+            .btn { padding: 10px 15px; font-size: 0.9rem; }
+            .action-btn { min-width: 100%; }
+            .pagination { flex-wrap: wrap; justify-content: center; }
+            .page-btn { min-width: 40px; padding: 8px 12px; font-size: 0.85rem; }
+            .notification { padding: 20px; max-width: calc(100% - 20px); }
         }
     </style>
 </head>
@@ -967,6 +1447,7 @@
         <div class="header">
             <h1>🔍 助记词扫描器</h1>
             <div class="version">v1.0 - 高速稳定版</div>
+            <div class="subtitle">完全独立的BTC地址扫描解决方案</div>
         </div>
         
         <!-- 状态横幅 -->
@@ -989,7 +1470,7 @@
                     <span>↻</span> 重连API
                 </button>
                 <div class="alarm-control">
-                    <div class="alarm-toggle" id="alarmToggle" onclick="toggleAlarm()">
+                    <div class="alarm-toggle active" id="alarmToggle" onclick="toggleAlarm()">
                         <span>🔔 警报器</span>
                         <div class="toggle-slider">
                             <div class="toggle-dot"></div>
@@ -1025,21 +1506,56 @@
             </div>
             
             <div class="speed-control">
-                <label>扫描速度: <span class="speed-value" id="speedValue">1</span> 个/秒</label>
-                <input type="range" min="1" max="5" step="1" value="1" class="speed-slider" id="speedSlider" oninput="updateSpeed()">
+                <label>扫描速度控制</label>
                 
-                <!-- 速度选项按钮 -->
+                <div class="speed-slider-container">
+                    <div class="speed-value-display" id="speedValueDisplay">1 个/秒</div>
+                    <input type="range" min="1" max="5" step="1" value="1" class="speed-slider" id="speedSlider" oninput="updateSpeed()">
+                </div>
+                
                 <div class="speed-options" id="speedOptions">
-                    <!-- 速度选项按钮将通过JavaScript生成 -->
+                    <button class="speed-btn active" data-speed="1" onclick="setSpeed('1')">
+                        低速 (1个/秒)
+                    </button>
+                    <button class="speed-btn" data-speed="2" onclick="setSpeed('2')">
+                        中速 (2个/秒)
+                    </button>
+                    <button class="speed-btn" data-speed="5" onclick="setSpeed('5')">
+                        高速 (5个/秒)
+                    </button>
+                    <button class="speed-btn" data-speed="10" onclick="setSpeed('10')">
+                        超速 (10个/秒)
+                    </button>
+                    <button class="speed-btn" data-speed="20" onclick="setSpeed('20')">
+                        极速 (20个/秒)
+                    </button>
+                </div>
+                
+                <div class="speed-description" id="speedDescription">
+                    最稳定的扫描速度，确保API调用成功率最高
                 </div>
             </div>
             
             <div class="api-info">
-                <span>当前API:</span>
-                <span class="api-provider" id="currentApi">待测试</span>
-                <span>已生成: <span id="apiGenerated">0</span></span>
-                <span>已检测: <span id="apiChecked">0</span></span>
-                <span>成功率: <span id="apiSuccessRate">0%</span></span>
+                <div class="api-provider active" id="currentApi">
+                    <span>当前API: 测试中</span>
+                </div>
+                <div class="api-info-item">
+                    <span class="api-info-label">已生成:</span>
+                    <span class="api-info-value" id="apiGenerated">0</span>
+                </div>
+                <div class="api-info-item">
+                    <span class="api-info-label">已检测:</span>
+                    <span class="api-info-value" id="apiChecked">0</span>
+                </div>
+                <div class="api-info-item">
+                    <span class="api-info-label">成功率:</span>
+                    <span class="api-info-value" id="apiSuccessRate">0%</span>
+                </div>
+                <div class="api-info-item">
+                    <span class="api-info-label">运行时间:</span>
+                    <span class="api-info-value" id="apiRuntime">0s</span>
+                </div>
             </div>
         </div>
         
@@ -1047,32 +1563,40 @@
         <div class="stats-panel">
             <div class="panel-header">
                 <span class="panel-icon">📈</span>
-                <h3>统计信息</h3>
+                <h3>实时统计信息</h3>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="statGenerated">0</div>
-                    <div class="stat-label">已生成</div>
+                    <div class="stat-label">已生成地址</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="statChecked">0</div>
-                    <div class="stat-label">已检测</div>
+                    <div class="stat-label">已检测地址</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card highlight">
                     <div class="stat-value" id="statWithBalance">0</div>
-                    <div class="stat-label">有余额</div>
+                    <div class="stat-label">有余额地址</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="statSuccessRate">0%</div>
-                    <div class="stat-label">成功率</div>
+                    <div class="stat-label">检测成功率</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card highlight">
                     <div class="stat-value" id="statTotalBTC">0.00000000</div>
-                    <div class="stat-label">总BTC</div>
+                    <div class="stat-label">总BTC余额</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="statQueueSize">0</div>
                     <div class="stat-label">队列长度</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statSpeed">0</div>
+                    <div class="stat-label">当前速度(个/秒)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statUptime">0s</div>
+                    <div class="stat-label">运行时间</div>
                 </div>
             </div>
         </div>
@@ -1081,30 +1605,40 @@
         <div class="current-scan">
             <div class="panel-header">
                 <span class="panel-icon">🎯</span>
-                <h3>当前扫描 <span id="currentScanNumber">#0</span></h3>
+                <h3>当前扫描详情 <span id="currentScanNumber">#0</span></h3>
             </div>
             <div class="scan-info">
                 <div class="info-row">
                     <div class="info-label">助记词:</div>
-                    <div class="info-value mnemonic-value" id="currentMnemonic">等待扫描...</div>
+                    <div class="info-value">
+                        <div class="mnemonic-value" id="currentMnemonic">等待扫描...</div>
+                    </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">地址:</div>
-                    <div class="info-value address-value" id="currentAddress">-</div>
+                    <div class="info-value">
+                        <div class="address-value" id="currentAddress">-</div>
+                    </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">私钥:</div>
-                    <div class="info-value private-key-value" id="currentPrivateKey">-</div>
+                    <div class="info-value">
+                        <div class="private-key-value" id="currentPrivateKey">-</div>
+                    </div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">余额:</div>
+                    <div class="info-label">余额状态:</div>
                     <div class="info-value">
                         <span class="balance-value balance-zero" id="currentBalance">等待检测...</span>
                     </div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">时间:</div>
+                    <div class="info-label">检测时间:</div>
                     <div class="info-value" id="currentTime">-</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">检测状态:</div>
+                    <div class="info-value" id="currentStatus">准备就绪</div>
                 </div>
                 
                 <div class="action-buttons">
@@ -1117,6 +1651,9 @@
                     <button class="action-btn" onclick="viewCurrentAddress()">
                         <span>🔍</span> 查看地址
                     </button>
+                    <button class="action-btn" onclick="copyCurrentAll()">
+                        <span>📝</span> 复制全部
+                    </button>
                 </div>
             </div>
         </div>
@@ -1125,41 +1662,41 @@
         <div class="patrol-panel">
             <div class="panel-header">
                 <span class="panel-icon">🔍</span>
-                <h3>巡查面板</h3>
+                <h3>地址巡查面板</h3>
             </div>
             <div class="patrol-controls">
-                <input type="text" id="searchInput" placeholder="搜索助记词、地址或私钥...">
+                <input type="text" id="searchInput" placeholder="搜索助记词、地址、私钥...">
                 <select id="filterBalance">
-                    <option value="all">所有余额</option>
-                    <option value="positive">有余额</option>
-                    <option value="zero">零余额</option>
-                    <option value="failed">失败</option>
+                    <option value="all">所有余额状态</option>
+                    <option value="positive">有余额地址</option>
+                    <option value="zero">零余额地址</option>
+                    <option value="failed">检测失败</option>
                 </select>
                 <select id="sortBy">
                     <option value="time">按时间排序(最新)</option>
-                    <option value="balance">按余额排序</option>
+                    <option value="balance">按余额排序(最高)</option>
                     <option value="address">按地址排序</option>
                 </select>
                 <button onclick="searchData()">搜索</button>
-                <button onclick="clearSearch()">清除</button>
-                <button onclick="refreshPatrolView()">刷新</button>
+                <button onclick="clearSearch()">清除搜索</button>
+                <button onclick="refreshPatrolView()">刷新表格</button>
             </div>
             
             <div class="table-container">
                 <table class="patrol-table" id="patrolTable">
                     <thead>
                         <tr>
-                            <th style="width: 50px;">#</th>
-                            <th>助记词</th>
-                            <th>地址</th>
-                            <th style="width: 120px;">余额</th>
-                            <th style="width: 80px;">操作</th>
+                            <th style="width: 60px;">ID</th>
+                            <th>助记词 (12个单词)</th>
+                            <th>BTC地址</th>
+                            <th style="width: 140px;">余额 (BTC)</th>
+                            <th style="width: 90px;">操作</th>
                         </tr>
                     </thead>
                     <tbody id="patrolTableBody">
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 40px; color: #7d8590;">
-                                准备就绪，点击"开始扫描"按钮开始
+                            <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                                🚀 准备就绪，点击"开始扫描"按钮启动BTC地址扫描
                             </td>
                         </tr>
                     </tbody>
@@ -1167,7 +1704,7 @@
             </div>
             
             <div class="pagination" id="pagination">
-                <!-- 分页按钮将通过JavaScript生成 -->
+                <!-- 分页按钮将通过JavaScript动态生成 -->
             </div>
         </div>
         
@@ -1175,11 +1712,11 @@
         <div class="found-balances">
             <div class="panel-header">
                 <span class="panel-icon">💰</span>
-                <h3>发现余额</h3>
+                <h3>发现余额记录</h3>
             </div>
             <div id="foundBalancesList">
-                <div style="text-align: center; color: #7d8590; padding: 20px;">
-                    尚未发现任何余额
+                <div style="text-align: center; color: #7d8590; padding: 40px; font-size: 1.1rem;">
+                    💡 尚未发现任何BTC余额，扫描继续进行中...
                 </div>
             </div>
         </div>
@@ -1187,10 +1724,19 @@
         <!-- 通知弹窗 -->
         <div class="notification" id="notification">
             <div class="notification-header">
-                <span>🎉</span> 发现余额！
+                <span>🎉 发现BTC余额！</span>
             </div>
             <div id="notificationContent">
-                <!-- 通知内容将通过JavaScript动态生成 -->
+                <div class="notification-balance" id="notificationBalance">0.00000000 BTC</div>
+                <div style="margin-bottom: 15px;">
+                    <div><strong>地址:</strong> <span id="notificationAddress" style="font-family: monospace;"></span></div>
+                    <div><strong>时间:</strong> <span id="notificationTime"></span></div>
+                    <div><strong>ID:</strong> <span id="notificationId"></span></div>
+                </div>
+            </div>
+            <div class="notification-actions">
+                <button class="notification-btn" onclick="copyNotificationData()">复制信息</button>
+                <button class="notification-btn primary" onclick="viewNotificationAddress()">查看地址</button>
             </div>
         </div>
         
@@ -1442,8 +1988,6 @@
         let alarmEnabled = true;
         let alarmSound = null;
         
-        // 测试地址已删除
-        
         // ==================== 速度控制 ====================
         function updateSpeed() {
             const slider = document.getElementById('speedSlider');
@@ -1475,7 +2019,7 @@
                     break;
             }
             
-            document.getElementById('speedValue').textContent = displayText;
+            document.getElementById('speedValueDisplay').textContent = displayText + " 个/秒";
             generateSpeed = 1000 / actualSpeed;
             
             updateSpeedButtons(displayText);
@@ -1502,6 +2046,16 @@
             
             slider.value = sliderValue;
             updateSpeed();
+            
+            // 更新描述
+            const descriptions = {
+                "1": "最稳定的扫描速度，确保API调用成功率最高",
+                "2": "平衡速度和稳定性，适合常规使用",
+                "5": "较快的扫描速度，可能会降低成功率",
+                "10": "快速扫描，建议在API稳定时使用",
+                "20": "最快的扫描速度，仅推荐在本地API使用"
+            };
+            document.getElementById('speedDescription').textContent = descriptions[speed] || "";
         }
 
         function updateSpeedButtons(activeSpeed) {
@@ -1513,25 +2067,6 @@
                     btn.classList.remove('active');
                 }
             });
-        }
-
-        function initSpeedOptions() {
-            const speedOptions = document.getElementById('speedOptions');
-            const speeds = [
-                { value: "1", label: "低速" },
-                { value: "2", label: "中速" },
-                { value: "5", label: "高速" },
-                { value: "10", label: "超速" },
-                { value: "20", label: "极速" }
-            ];
-            
-            let html = '';
-            speeds.forEach(speed => {
-                const active = speed.value === "1" ? "active" : "";
-                html += `<button class="speed-btn ${active}" data-speed="${speed.value}" onclick="setSpeed('${speed.value}')">${speed.label}</button>`;
-            });
-            
-            speedOptions.innerHTML = html;
         }
 
         // ==================== 智能API选择器 ====================
@@ -1814,7 +2349,8 @@
                         received: balanceInfo.received,
                         txCount: balanceInfo.txCount,
                         timestamp: new Date().toLocaleTimeString(),
-                        date: new Date().toISOString()
+                        date: new Date().toISOString(),
+                        status: balanceInfo.balance > 0 ? 'positive' : 'zero'
                     };
                     
                     checkedCounter++;
@@ -1847,6 +2383,23 @@
                     
                 } else {
                     console.log("余额检查失败");
+                    
+                    const failedResult = {
+                        id: addressData.id,
+                        words: addressData.words,
+                        address: addressData.address,
+                        privateKey: addressData.privateKey,
+                        balance: -1,
+                        received: 0,
+                        txCount: 0,
+                        timestamp: new Date().toLocaleTimeString(),
+                        date: new Date().toISOString(),
+                        status: 'failed'
+                    };
+                    
+                    currentData = failedResult;
+                    allResults.unshift(failedResult);
+                    updateCurrentScan(failedResult);
                     
                     if (apiConnected && !balanceInfo.apiSuccess) {
                         console.log("API检查失败，可能已断开");
@@ -2012,6 +2565,8 @@
                 document.getElementById('currentBalance').className = 'balance-value balance-zero';
                 document.getElementById('currentTime').textContent = '等待中...';
                 document.getElementById('currentScanNumber').textContent = `#${firstInQueue.id}`;
+                document.getElementById('currentStatus').textContent = '等待检测';
+                document.getElementById('currentStatus').style.color = '#7d8590';
             }
         }
 
@@ -2020,9 +2575,11 @@
             document.getElementById('currentAddress').textContent = addressData.address;
             document.getElementById('currentPrivateKey').textContent = addressData.privateKey;
             document.getElementById('currentBalance').textContent = '检查中...';
-            document.getElementById('currentBalance').className = 'balance-value balance-zero';
+            document.getElementById('currentBalance').className = 'balance-value balance-checking';
             document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
             document.getElementById('currentScanNumber').textContent = `#${addressData.id}`;
+            document.getElementById('currentStatus').textContent = '检查余额中';
+            document.getElementById('currentStatus').style.color = '#f3bf40';
         }
 
         function updateCurrentScan(result) {
@@ -2032,16 +2589,22 @@
             
             const balanceElement = document.getElementById('currentBalance');
             
-            if (result.balance === -1) {
-                balanceElement.textContent = '检查失败';
+            if (result.status === 'failed') {
+                balanceElement.textContent = '查询失败';
                 balanceElement.className = 'balance-value balance-failed';
+                document.getElementById('currentStatus').textContent = '查询失败';
+                document.getElementById('currentStatus').style.color = '#da3633';
             } else if (result.balance > 0) {
                 const balanceInBTC = (result.balance / 100000000).toFixed(8);
                 balanceElement.textContent = `${balanceInBTC} BTC`;
                 balanceElement.className = 'balance-value balance-positive';
+                document.getElementById('currentStatus').textContent = '发现余额！';
+                document.getElementById('currentStatus').style.color = '#3fb950';
             } else {
-                balanceElement.textContent = '0';
+                balanceElement.textContent = '0 BTC';
                 balanceElement.className = 'balance-value balance-zero';
+                document.getElementById('currentStatus').textContent = '零余额';
+                document.getElementById('currentStatus').style.color = '#7d8590';
             }
             
             document.getElementById('currentTime').textContent = result.timestamp;
@@ -2069,14 +2632,11 @@
         }
 
         function updateQueueInfo() {
-            // 计算真正的待检测数量 = 已生成 - 已检测
             const actualPending = Math.max(0, scanCounter - checkedCounter);
             
-            // 显示真实的待检测数量
             document.getElementById('queueCount').textContent = actualPending;
             document.getElementById('statQueueSize').textContent = actualPending;
             
-            // 同时更新进度信息（可选）
             const progress = checkedCounter > 0 ? Math.round((checkedCounter / scanCounter) * 100) : 0;
             console.log(`进度: ${checkedCounter}/${scanCounter} (${progress}%), 待检测: ${actualPending}`);
         }
@@ -2103,6 +2663,29 @@
             document.getElementById('totalBTC').textContent = totalBTC.toFixed(8) + ' BTC';
         }
 
+        function updateStats() {
+            const elapsedSeconds = scanStartTime ? Math.floor((Date.now() - scanStartTime) / 1000) : 0;
+            const speed = elapsedSeconds > 0 ? (scanCounter / elapsedSeconds).toFixed(1) : '0.0';
+            
+            document.getElementById('statGenerated').textContent = scanCounter;
+            document.getElementById('statChecked').textContent = checkedCounter;
+            document.getElementById('statWithBalance').textContent = foundCounter;
+            document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
+            document.getElementById('statSpeed').textContent = speed;
+            document.getElementById('statUptime').textContent = `${elapsedSeconds}s`;
+            
+            document.getElementById('apiGenerated').textContent = scanCounter;
+            document.getElementById('apiChecked').textContent = checkedCounter;
+            document.getElementById('apiRuntime').textContent = `${elapsedSeconds}s`;
+            
+            const successRate = checkedCounter > 0 ? 
+                Math.round((checkedCounter - foundCounter) / checkedCounter * 100) : 100;
+            document.getElementById('statSuccessRate').textContent = `${successRate}%`;
+            document.getElementById('apiSuccessRate').textContent = `${successRate}%`;
+            
+            document.getElementById('totalBTC').textContent = totalBTC.toFixed(8) + ' BTC';
+        }
+
         // ==================== 巡查面板功能 ====================
         function refreshPatrolView() {
             filteredResults = [...allResults];
@@ -2114,8 +2697,8 @@
         function clearPatrolView() {
             document.getElementById('patrolTableBody').innerHTML = `
                 <tr>
-                    <td colspan="5" style="text-align: center; padding: 40px; color: #7d8590;">
-                        准备就绪，点击"开始扫描"按钮开始
+                    <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                        🚀 准备就绪，点击"开始扫描"按钮启动BTC地址扫描
                     </td>
                 </tr>
             `;
@@ -2140,7 +2723,7 @@
             } else if (filterBalance === 'zero') {
                 filteredResults = filteredResults.filter(item => item.balance === 0);
             } else if (filterBalance === 'failed') {
-                filteredResults = filteredResults.filter(item => item.balance === -1);
+                filteredResults = filteredResults.filter(item => item.status === 'failed');
             }
             
             if (sortBy === 'time') {
@@ -2158,8 +2741,8 @@
             if (filteredResults.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="5" style="text-align: center; padding: 40px; color: #7d8590;">
-                            没有找到匹配的结果
+                        <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                            🔍 没有找到匹配的结果
                         </td>
                     </tr>
                 `;
@@ -2176,21 +2759,24 @@
                 const balanceInBTC = item.balance > 0 ? (item.balance / 100000000).toFixed(8) : '0';
                 
                 let balanceClass = 'balance-cell zero';
-                let balanceText = '0';
+                let balanceText = '0 BTC';
+                let rowClass = '';
                 
-                if (item.balance === -1) {
+                if (item.status === 'failed') {
                     balanceClass = 'balance-cell failed';
-                    balanceText = '失败';
+                    balanceText = '查询失败';
+                    rowClass = 'failed';
                 } else if (item.balance > 0) {
                     balanceClass = 'balance-cell positive';
                     balanceText = `${balanceInBTC} BTC`;
+                    rowClass = 'has-balance';
                 }
                 
                 html += `
-                    <tr class="${item.balance > 0 ? 'has-balance' : ''}">
-                        <td>${displayIndex}</td>
-                        <td class="mnemonic-cell">${item.words}</td>
-                        <td class="address-cell">${item.address}</td>
+                    <tr class="${rowClass}" data-id="${item.id}">
+                        <td>${item.id}</td>
+                        <td class="mnemonic-cell" title="${item.words}">${item.words}</td>
+                        <td class="address-cell" title="${item.address}">${item.address}</td>
                         <td class="${balanceClass}">${balanceText}</td>
                         <td>
                             <button class="table-btn" onclick="copyItemData(${item.id})">复制</button>
@@ -2266,8 +2852,8 @@
             
             if (balancesWithBTC.length === 0) {
                 foundBalancesList.innerHTML = `
-                    <div style="text-align: center; color: #7d8590; padding: 20px;">
-                        尚未发现任何余额
+                    <div style="text-align: center; color: #7d8590; padding: 40px; font-size: 1.1rem;">
+                        💡 尚未发现任何BTC余额，扫描继续进行中...
                     </div>
                 `;
                 return;
@@ -2280,24 +2866,33 @@
                 const balanceInBTC = (item.balance / 100000000).toFixed(8);
                 
                 html += `
-                    <div class="balance-item">
+                    <div class="balance-item" data-id="${item.id}">
                         <div class="balance-header">
-                            <span>💰</span> 发现 #${item.id}
+                            <span>💰</span> 发现 #${item.id} - ${balanceInBTC} BTC
                         </div>
-                        <div style="margin-bottom: 10px; color: #7d8590; font-size: 12px;">
-                            时间: ${item.timestamp}
-                        </div>
-                        <div style="margin-bottom: 8px; font-size: 13px;">
-                            <strong>地址:</strong> <span style="color: #58a6ff; font-family: monospace;">${item.address}</span>
-                        </div>
-                        <div style="margin-bottom: 8px; font-size: 13px;">
-                            <strong>助记词:</strong> <span style="color: #f0883e;">${item.words.substring(0, 50)}...</span>
+                        <div class="balance-details">
+                            <div class="balance-detail-row">
+                                <div class="balance-detail-label">时间:</div>
+                                <div class="balance-detail-value">${item.timestamp}</div>
+                            </div>
+                            <div class="balance-detail-row">
+                                <div class="balance-detail-label">地址:</div>
+                                <div class="balance-detail-value" style="color: #58a6ff;">${item.address}</div>
+                            </div>
+                            <div class="balance-detail-row">
+                                <div class="balance-detail-label">私钥:</div>
+                                <div class="balance-detail-value" style="color: #d2a8ff; font-family: monospace; font-size: 0.85rem;">${item.privateKey}</div>
+                            </div>
+                            <div class="balance-detail-row">
+                                <div class="balance-detail-label">助记词:</div>
+                                <div class="balance-detail-value" style="color: #ffcc00;">${item.words}</div>
+                            </div>
                         </div>
                         <div class="balance-amount">
                             ${balanceInBTC} BTC
                         </div>
-                        <div style="text-align: center; margin-top: 15px;">
-                            <button class="action-btn" style="padding: 8px 16px; font-size: 12px;" onclick="copyItemData(${item.id})">
+                        <div class="balance-actions">
+                            <button class="action-btn" onclick="copyItemData(${item.id})" style="flex: 1;">
                                 <span>📋</span> 复制全部信息
                             </button>
                         </div>
@@ -2316,21 +2911,19 @@
             const balanceInBTC = (result.balance / 100000000).toFixed(8);
             
             notificationContent.innerHTML = `
-                <div style="font-size: 24px; font-weight: 700; text-align: center; margin: 10px 0;">
-                    ${balanceInBTC} BTC
-                </div>
-                <div style="font-size: 14px; margin-bottom: 8px;">
-                    <strong>地址:</strong> <span style="font-family: monospace;">${result.address}</span>
-                </div>
-                <div style="font-size: 14px; margin-bottom: 15px;">
-                    <strong>时间:</strong> ${result.timestamp}
-                </div>
-                <div style="text-align: center;">
-                    <button onclick="copyItemData(${result.id})" style="padding: 8px 16px; background: white; color: #238636; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                        复制信息
-                    </button>
+                <div class="notification-balance">${balanceInBTC} BTC</div>
+                <div style="margin-bottom: 15px;">
+                    <div><strong>地址:</strong> <span style="font-family: monospace;">${result.address}</span></div>
+                    <div><strong>私钥:</strong> <span style="font-family: monospace; font-size: 0.9rem;">${result.privateKey.substring(0, 16)}...</span></div>
+                    <div><strong>时间:</strong> <span>${result.timestamp}</span></div>
+                    <div><strong>ID:</strong> <span>#${result.id}</span></div>
                 </div>
             `;
+            
+            document.getElementById('notificationBalance').textContent = `${balanceInBTC} BTC`;
+            document.getElementById('notificationAddress').textContent = result.address;
+            document.getElementById('notificationTime').textContent = result.timestamp;
+            document.getElementById('notificationId').textContent = `#${result.id}`;
             
             notification.style.display = 'block';
             
@@ -2339,24 +2932,54 @@
             }, 5000);
         }
 
+        function copyNotificationData() {
+            copyCurrentAll();
+        }
+
+        function viewNotificationAddress() {
+            if (currentData) {
+                window.open(`https://blockchain.info/address/${currentData.address}`, '_blank');
+            }
+        }
+
         // ==================== 复制功能 ====================
         function copyCurrentMnemonic() {
             if (currentData) {
                 navigator.clipboard.writeText(currentData.words)
-                    .then(() => alert('助记词已复制到剪贴板'))
-                    .catch(err => console.error('复制失败:', err));
+                    .then(() => showNotification('复制成功', '助记词已复制到剪贴板', 'success'))
+                    .catch(err => showNotification('复制失败', '请手动复制助记词', 'error'));
             } else {
-                alert('没有当前数据可复制');
+                showNotification('无数据', '没有当前数据可复制', 'warning');
             }
         }
 
         function copyCurrentPrivateKey() {
             if (currentData) {
                 navigator.clipboard.writeText(currentData.privateKey)
-                    .then(() => alert('私钥已复制到剪贴板'))
-                    .catch(err => console.error('复制失败:', err));
+                    .then(() => showNotification('复制成功', '私钥已复制到剪贴板', 'success'))
+                    .catch(err => showNotification('复制失败', '请手动复制私钥', 'error'));
             } else {
-                alert('没有当前数据可复制');
+                showNotification('无数据', '没有当前数据可复制', 'warning');
+            }
+        }
+
+        function copyCurrentAll() {
+            if (currentData) {
+                const data = `
+BTC地址信息:
+助记词: ${currentData.words}
+地址: ${currentData.address}
+私钥: ${currentData.privateKey}
+余额: ${currentData.balance > 0 ? (currentData.balance / 100000000).toFixed(8) + ' BTC' : '0 BTC'}
+时间: ${currentData.timestamp}
+状态: ${currentData.status === 'positive' ? '有余额' : currentData.status === 'failed' ? '查询失败' : '零余额'}
+                `.trim();
+                
+                navigator.clipboard.writeText(data)
+                    .then(() => showNotification('复制成功', '全部信息已复制到剪贴板', 'success'))
+                    .catch(err => showNotification('复制失败', '请手动复制信息', 'error'));
+            } else {
+                showNotification('无数据', '没有当前数据可复制', 'warning');
             }
         }
 
@@ -2364,7 +2987,7 @@
             if (currentData) {
                 window.open(`https://blockchain.info/address/${currentData.address}`, '_blank');
             } else {
-                alert('没有当前地址可查看');
+                showNotification('无地址', '没有当前地址可查看', 'warning');
             }
         }
 
@@ -2372,19 +2995,51 @@
             const item = allResults.find(r => r.id === itemId);
             if (item) {
                 const data = `
+BTC地址信息 (ID: ${item.id}):
 助记词: ${item.words}
 地址: ${item.address}
 私钥: ${item.privateKey}
 余额: ${item.balance > 0 ? (item.balance / 100000000).toFixed(8) + ' BTC' : '0 BTC'}
 时间: ${item.timestamp}
+状态: ${item.status === 'positive' ? '有余额' : item.status === 'failed' ? '查询失败' : '零余额'}
                 `.trim();
                 
                 navigator.clipboard.writeText(data)
-                    .then(() => alert('数据已复制到剪贴板'))
-                    .catch(err => console.error('复制失败:', err));
+                    .then(() => showNotification('复制成功', '地址信息已复制到剪贴板', 'success'))
+                    .catch(err => showNotification('复制失败', '请手动复制信息', 'error'));
             } else {
-                alert('找不到要复制的数据');
+                showNotification('无数据', '找不到要复制的数据', 'warning');
             }
+        }
+
+        function showNotification(title, message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const notificationContent = document.getElementById('notificationContent');
+            
+            notificationContent.innerHTML = `
+                <div style="font-size: 20px; font-weight: 700; text-align: center; margin: 15px 0;">
+                    ${title}
+                </div>
+                <div style="font-size: 14px; text-align: center; margin-bottom: 20px; line-height: 1.5;">
+                    ${message}
+                </div>
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, rgba(63, 185, 80, 0.98) 0%, rgba(46, 160, 67, 0.98) 100%)';
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, rgba(218, 54, 51, 0.98) 0%, rgba(248, 81, 73, 0.98) 100%)';
+            } else if (type === 'warning') {
+                notification.style.background = 'linear-gradient(135deg, rgba(243, 191, 64, 0.98) 0%, rgba(245, 203, 98, 0.98) 100%)';
+            } else {
+                notification.style.background = 'linear-gradient(135deg, rgba(255, 204, 0, 0.98) 0%, rgba(255, 170, 0, 0.98) 100%)';
+            }
+            
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
 
         // ==================== 其他功能 ====================
@@ -2406,7 +3061,7 @@
 
         function testAlarm() {
             playAlarm();
-            alert('🔔 警报测试成功！');
+            showNotification('警报测试', '🔔 警报测试成功！', 'info');
         }
 
         function playAlarm() {
@@ -2422,25 +3077,30 @@
             }
         }
 
-        function updateStats() {
-            const successCount = allResults.filter(r => r.balance >= 0).length;
-            const successRate = checkedCounter > 0 ? 
-                (successCount / checkedCounter * 100).toFixed(2) : 100;
-            document.getElementById('statSuccessRate').textContent = `${successRate}%`;
-        }
-
         function showStats() {
+            const elapsedSeconds = scanStartTime ? Math.floor((Date.now() - scanStartTime) / 1000) : 0;
+            const hitRate = checkedCounter > 0 ? ((foundCounter / checkedCounter) * 100).toFixed(4) : 0;
+            
             const stats = `
-统计信息:
-- 已生成: ${scanCounter}
-- 已检测: ${checkedCounter}
-- 有余额: ${foundCounter}
-- 总BTC: ${totalBTC.toFixed(8)}
-- 成功率: ${apiTotalAttempts > 0 ? Math.round((apiTotalSuccess / apiTotalAttempts) * 100) : 100}%
-- 队列长度: ${scanCounter - checkedCounter}
-- 扫描时间: ${scanStartTime ? Math.round((Date.now() - scanStartTime) / 1000) : 0}秒
-- 当前速度: ${1000/generateSpeed}个/秒
-- 扫描状态: ${isScanning ? '运行中' : '已暂停'}
+BTC扫描统计信息:
+
+📊 扫描统计:
+• 已生成地址: ${scanCounter}
+• 已检测地址: ${checkedCounter}
+• 有余额地址: ${foundCounter}
+• 总BTC余额: ${totalBTC.toFixed(8)} BTC
+• 命中率: ${hitRate}%
+
+⚡ 性能统计:
+• 当前速度: ${(1000 / generateSpeed).toFixed(1)} 个/秒
+• 运行时间: ${elapsedSeconds} 秒
+• 扫描状态: ${isScanning ? (scanCounter > 0 ? '运行中' : '已暂停') : '已停止'}
+
+📈 数据统计:
+• 总记录数: ${allResults.length}
+• 有余额记录: ${foundCounter}
+• 零余额记录: ${allResults.filter(r => r.balance === 0).length}
+• 查询失败: ${allResults.filter(r => r.status === 'failed').length}
             `.trim();
             
             alert(stats);
@@ -2448,16 +3108,17 @@
 
         function exportData() {
             if (allResults.length === 0) {
-                alert('没有数据可导出');
+                showNotification('无数据', '没有数据可导出', 'warning');
                 return;
             }
             
-            let csv = 'ID,助记词,地址,私钥,余额(BTC),交易数,时间\n';
+            let csv = 'ID,助记词,地址,私钥,余额(BTC),交易数,时间,状态\n';
             
             allResults.forEach(item => {
                 const balanceInBTC = item.balance > 0 ? (item.balance / 100000000).toFixed(8) : '0';
                 const txCount = item.txCount || 0;
                 const timestamp = item.timestamp || new Date().toLocaleString();
+                const status = item.status === 'positive' ? '有余额' : item.status === 'failed' ? '查询失败' : '零余额';
                 
                 const escapeCSV = (str) => {
                     if (str === null || str === undefined) return '';
@@ -2468,7 +3129,7 @@
                     return str;
                 };
                 
-                csv += `${item.id},${escapeCSV(item.words)},${escapeCSV(item.address)},${escapeCSV(item.privateKey)},${balanceInBTC},${txCount},${escapeCSV(timestamp)}\n`;
+                csv += `${item.id},${escapeCSV(item.words)},${escapeCSV(item.address)},${escapeCSV(item.privateKey)},${balanceInBTC},${txCount},${escapeCSV(timestamp)},${status}\n`;
             });
             
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2476,14 +3137,14 @@
             const url = URL.createObjectURL(blob);
             
             link.setAttribute('href', url);
-            link.setAttribute('download', `助记词扫描结果_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute('download', `BTC扫描器结果_${new Date().toISOString().slice(0,10)}.csv`);
             link.style.visibility = 'hidden';
             
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            alert(`已导出 ${allResults.length} 条记录`);
+            showNotification('导出成功', `已导出 ${allResults.length} 条记录到CSV文件`, 'success');
         }
 
         // ==================== 初始化 ====================
@@ -2491,8 +3152,7 @@
             console.log("开始初始化...");
             
             initAlarmSound();
-            initSpeedOptions();
-            updateSpeed();
+            setSpeed('1');
             updateTotalBTC();
             updateQueueInfo();
             
@@ -2505,8 +3165,10 @@
             
             if (apiConnected) {
                 console.log("初始化完成，API连接成功");
+                showNotification('BTC扫描器已就绪', '点击"开始扫描"按钮启动BTC地址扫描', 'info');
             } else {
                 console.log("初始化完成，等待手动重连");
+                showNotification('API连接失败', '请点击"强制重连"按钮重新连接API', 'error');
             }
         }
 
@@ -2520,7 +3182,8 @@
         window.addEventListener('beforeunload', function(e) {
             if (isScanning) {
                 e.preventDefault();
-                e.returnValue = '扫描正在进行中，确定要离开吗？';
+                e.returnValue = 'BTC扫描正在进行中，确定要离开吗？';
+                return 'BTC扫描正在进行中，确定要离开吗？';
             }
         });
     </script>

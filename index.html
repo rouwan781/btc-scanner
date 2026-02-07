@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>助记词扫描器 v1.0</title>
+    <title>BTC碰撞2.0</title>
     <style>
         /* ==================== 全局样式 ==================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1445,7 +1445,7 @@
     <div class="container">
         <!-- 头部 -->
         <div class="header">
-            <h1>🔍 助记词扫描器</h1>
+            <h1>⚡ BTC碰撞 2.0</h1>
             <div class="version">v1.0 - 高速稳定版</div>
             <div class="subtitle">完全独立的BTC地址扫描解决方案</div>
         </div>
@@ -2380,11 +2380,9 @@
                     updateCurrentScan(failedResult);
                     
                     if (!balanceInfo.apiSuccess) {
-                        console.log("API检查失败，可能已断开");
-                        apiConnected = false;
-                        updateApiStatus('检查失败', 'offline');
-                        pauseScanner();
-                        setTimeout(reconnectAPI, 3000);
+                        console.log("API检查失败，正在自动切换API");
+                        updateApiStatus('切换API中', 'connecting');
+                        // 移除自动暂停功能，继续尝试
                     }
                 }
                 
@@ -2409,10 +2407,8 @@
                 updateCurrentScan(failedResult);
                 
                 if (apiConnected) {
-                    apiConnected = false;
-                    updateApiStatus('处理错误', 'offline');
-                    pauseScanner();
-                    setTimeout(reconnectAPI, 3000);
+                    updateApiStatus('连接不稳定', 'offline');
+                    // 移除自动暂停功能，继续尝试
                 }
             }
             
@@ -3021,7 +3017,7 @@ BTC扫描统计信息:
             
             if (apiConnected) {
                 console.log("初始化完成，API连接成功");
-                showNotification('BTC扫描器已就绪', '点击"开始扫描"按钮启动BTC地址扫描', 'info');
+                showNotification('BTC碰撞2.0已就绪', '点击"开始扫描"按钮启动BTC地址碰撞', 'info');
             } else {
                 console.log("初始化完成，等待手动重连");
                 showNotification('API连接失败', '请点击"强制重连"按钮重新连接API', 'error');

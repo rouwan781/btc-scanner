@@ -1780,6 +1780,9 @@
         // 是否正在检查余额
         let isCheckingBalance = false;
         
+        // 当前API索引
+        let currentApiIndex = 0;
+        
         // ==================== API管理系统（优化的API源） ====================
         let apiProviders = [
             {
@@ -2185,6 +2188,23 @@
             }
         }
 
+        // 自动重连函数
+        async function autoReconnect() {
+            console.log("开始自动重连...");
+            const success = await testAllAPIs();
+            
+            if (success) {
+                console.log("自动重连成功");
+                apiConnected = true;
+                updateApiStatus('在线', 'online');
+                return true;
+            } else {
+                console.log("自动重连失败，5秒后重试");
+                setTimeout(autoReconnect, 5000);
+                return false;
+            }
+        }
+
         function manualReconnect() {
             console.log("手动触发重连");
             retryCount = 0;
@@ -2313,102 +2333,128 @@
             document.getElementById('apiGenerated').textContent = scanCounter;
             document.getElementById('currentScanNumber').textContent = `#${scanCounter}`;
             
-            try {
-                // 立即检查余额
-                const balanceInfo = await checkBalanceFast(addressData.address);
-                
-                if (balanceInfo.success) {
-                    const result = {
-                        id: addressData.id,
-                        words: addressData.words,
-                        address: addressData.address,
-                        privateKey: addressData.privateKey,
-                        balance: balanceInfo.balance,
-                        received: balanceInfo.received,
-                        txCount: balanceInfo.txCount,
-                        timestamp: new Date().toLocaleTimeString(),
-                        date: new Date().toISOString(),
-                        status: balanceInfo.balance > 0 ? 'positive' : 'zero'
-                    };
+            let retryCount = 0;
+            const maxRetries = 3;
+            
+            // 重试逻辑：如果查询失败，会重试直到成功
+            while (retryCount < maxRetries && isScanning) {
+                try {
+                    // 检查余额
+                    const balanceInfo = await checkBalanceFast(addressData.address);
                     
-                    checkedCounter++;
-                    document.getElementById('statChecked').textContent = checkedCounter;
-                    document.getElementById('apiChecked').textContent = checkedCounter;
-                    
-                    currentData = result;
-                    allResults.unshift(result);
-                    
-                    updateCurrentScan(result);
-                    
-                    if (balanceInfo.balance > 0) {
-                        foundCounter++;
-                        totalBTC += balanceInfo.balance / 100000000;
-                        document.getElementById('statWithBalance').textContent = foundCounter;
-                        document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
+                    if (balanceInfo.success) {
+                        const result = {
+                            id: addressData.id,
+                            words: addressData.words,
+                            address: addressData.address,
+                            privateKey: addressData.privateKey,
+                            balance: balanceInfo.balance,
+                            received: balanceInfo.received,
+                            txCount: balanceInfo.txCount,
+                            timestamp: new Date().toLocaleTimeString(),
+                            date: new Date().toISOString(),
+                            status: balanceInfo.balance > 0 ? 'positive' : 'zero'
+                        };
                         
-                        updateTotalBTC();
+                        checkedCounter++;
+                        document.getElementById('statChecked').textContent = checkedCounter;
+                        document.getElementById('apiChecked').textContent = checkedCounter;
                         
-                        if (alarmEnabled) {
-                            playAlarm();
+                        currentData = result;
+                        allResults.unshift(result);
+                        
+                        updateCurrentScan(result);
+                        
+                        if (balanceInfo.balance > 0) {
+                            foundCounter++;
+                            totalBTC += balanceInfo.balance / 100000000;
+                            document.getElementById('statWithBalance').textContent = foundCounter;
+                            document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
+                            
+                            updateTotalBTC();
+                            
+                            if (alarmEnabled) {
+                                playAlarm();
+                            }
+                            
+                            showBalanceNotification(result);
+                            updateFoundBalances();
                         }
                         
-                        showBalanceNotification(result);
-                        updateFoundBalances();
+                        refreshPatrolView();
+                        updateStats();
+                        
+                        // 成功，跳出重试循环
+                        break;
+                    } else {
+                        retryCount++;
+                        console.log(`余额检查失败，第${retryCount}次重试`);
+                        
+                        if (!balanceInfo.apiSuccess) {
+                            console.log("API检查失败，正在尝试重新连接...");
+                            updateApiStatus('重连中...', 'connecting');
+                            
+                            // 尝试自动重连
+                            await autoReconnect();
+                        }
+                        
+                        if (retryCount < maxRetries) {
+                            // 等待一段时间后重试
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                        } else {
+                            // 达到最大重试次数，记录为失败
+                            console.log("达到最大重试次数，记录为查询失败");
+                            
+                            const failedResult = {
+                                id: addressData.id,
+                                words: addressData.words,
+                                address: addressData.address,
+                                privateKey: addressData.privateKey,
+                                balance: -1,
+                                received: 0,
+                                txCount: 0,
+                                timestamp: new Date().toLocaleTimeString(),
+                                date: new Date().toISOString(),
+                                status: 'failed'
+                            };
+                            
+                            currentData = failedResult;
+                            allResults.unshift(failedResult);
+                            updateCurrentScan(failedResult);
+                            
+                            // 开始自动重连
+                            autoReconnect();
+                        }
                     }
                     
-                    refreshPatrolView();
-                    updateStats();
+                } catch (error) {
+                    console.error('检查余额失败:', error);
+                    retryCount++;
                     
-                } else {
-                    console.log("余额检查失败");
-                    
-                    const failedResult = {
-                        id: addressData.id,
-                        words: addressData.words,
-                        address: addressData.address,
-                        privateKey: addressData.privateKey,
-                        balance: -1,
-                        received: 0,
-                        txCount: 0,
-                        timestamp: new Date().toLocaleTimeString(),
-                        date: new Date().toISOString(),
-                        status: 'failed'
-                    };
-                    
-                    currentData = failedResult;
-                    allResults.unshift(failedResult);
-                    updateCurrentScan(failedResult);
-                    
-                    if (!balanceInfo.apiSuccess) {
-                        console.log("API检查失败，正在自动切换API");
-                        updateApiStatus('切换API中', 'connecting');
-                        // 移除自动暂停功能，继续尝试
+                    if (retryCount < maxRetries) {
+                        console.log(`第${retryCount}次重试`);
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                    } else {
+                        const failedResult = {
+                            id: addressData.id,
+                            words: addressData.words,
+                            address: addressData.address,
+                            privateKey: addressData.privateKey,
+                            balance: -1,
+                            received: 0,
+                            txCount: 0,
+                            timestamp: new Date().toLocaleTimeString(),
+                            date: new Date().toISOString(),
+                            status: 'failed'
+                        };
+                        
+                        currentData = failedResult;
+                        allResults.unshift(failedResult);
+                        updateCurrentScan(failedResult);
+                        
+                        // 开始自动重连
+                        autoReconnect();
                     }
-                }
-                
-            } catch (error) {
-                console.error('检查余额失败:', error);
-                
-                const failedResult = {
-                    id: addressData.id,
-                    words: addressData.words,
-                    address: addressData.address,
-                    privateKey: addressData.privateKey,
-                    balance: -1,
-                    received: 0,
-                    txCount: 0,
-                    timestamp: new Date().toLocaleTimeString(),
-                    date: new Date().toISOString(),
-                    status: 'failed'
-                };
-                
-                currentData = failedResult;
-                allResults.unshift(failedResult);
-                updateCurrentScan(failedResult);
-                
-                if (apiConnected) {
-                    updateApiStatus('连接不稳定', 'offline');
-                    // 移除自动暂停功能，继续尝试
                 }
             }
             

@@ -2335,12 +2335,17 @@
             
             let retryCount = 0;
             const maxRetries = 3;
+            let success = false;
             
             // 重试逻辑：如果查询失败，会重试直到成功
             while (retryCount < maxRetries && isScanning) {
                 try {
                     // 检查余额
                     const balanceInfo = await checkBalanceFast(addressData.address);
+                    
+                    checkedCounter++;  // 每次尝试都增加检测计数
+                    document.getElementById('statChecked').textContent = checkedCounter;
+                    document.getElementById('apiChecked').textContent = checkedCounter;
                     
                     if (balanceInfo.success) {
                         const result = {
@@ -2355,10 +2360,6 @@
                             date: new Date().toISOString(),
                             status: balanceInfo.balance > 0 ? 'positive' : 'zero'
                         };
-                        
-                        checkedCounter++;
-                        document.getElementById('statChecked').textContent = checkedCounter;
-                        document.getElementById('apiChecked').textContent = checkedCounter;
                         
                         currentData = result;
                         allResults.unshift(result);
@@ -2385,6 +2386,7 @@
                         updateStats();
                         
                         // 成功，跳出重试循环
+                        success = true;
                         break;
                     } else {
                         retryCount++;
@@ -2430,6 +2432,10 @@
                 } catch (error) {
                     console.error('检查余额失败:', error);
                     retryCount++;
+                    
+                    checkedCounter++;  // 错误尝试也计入检测计数
+                    document.getElementById('statChecked').textContent = checkedCounter;
+                    document.getElementById('apiChecked').textContent = checkedCounter;
                     
                     if (retryCount < maxRetries) {
                         console.log(`第${retryCount}次重试`);
@@ -2576,8 +2582,9 @@
             document.getElementById('apiChecked').textContent = checkedCounter;
             document.getElementById('apiRuntime').textContent = `${elapsedSeconds}s`;
             
+            // 修复成功率计算：成功率 = 成功检测数 / 总检测数
             const successRate = checkedCounter > 0 ? 
-                Math.round((checkedCounter - foundCounter) / checkedCounter * 100) : 100;
+                Math.round((checkedCounter / scanCounter) * 100) : 0;
             document.getElementById('statSuccessRate').textContent = `${successRate}%`;
             document.getElementById('apiSuccessRate').textContent = `${successRate}%`;
             

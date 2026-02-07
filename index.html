@@ -9,8 +9,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #0a0e14 0%, #141922 100%);
-            color: #e6edf3;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            color: #f0f0f0;
             line-height: 1.6;
             min-height: 100vh;
             padding: 10px;
@@ -28,44 +28,44 @@
             text-align: center;
             margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            border-bottom: 2px solid rgba(0, 122, 255, 0.3);
             position: relative;
         }
         .header h1 {
             font-size: 2.5rem;
-            background: linear-gradient(90deg, #ffcc00 0%, #ffaa00 50%, #ffcc00 100%);
+            background: linear-gradient(90deg, #007aff 0%, #00d4ff 50%, #007aff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             font-weight: 800;
-            text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 122, 255, 0.3);
             animation: glow 2s ease-in-out infinite alternate;
         }
         @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
-            to { text-shadow: 0 0 20px rgba(255, 170, 0, 0.8); }
+            from { text-shadow: 0 0 10px rgba(0, 122, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
         }
         .header .version {
             font-size: 0.9rem;
-            color: #ffaa00;
-            background: rgba(22, 27, 34, 0.9);
+            color: #00d4ff;
+            background: rgba(26, 26, 26, 0.9);
             padding: 6px 15px;
             border-radius: 20px;
             display: inline-block;
-            border: 1px solid rgba(255, 170, 0, 0.3);
+            border: 1px solid rgba(0, 122, 255, 0.3);
             font-weight: 600;
         }
         .header .subtitle {
             margin-top: 10px;
-            color: #7d8590;
+            color: #888;
             font-size: 0.95rem;
         }
         
         /* ==================== 状态横幅 ==================== */
         .status-banner {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            border: 1px solid rgba(60, 60, 60, 0.8);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 25px;
@@ -85,7 +85,7 @@
             left: -100%;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+            background: linear-gradient(90deg, transparent, #007aff, transparent);
             animation: scanLine 3s linear infinite;
         }
         @keyframes scanLine {
@@ -98,16 +98,16 @@
             align-items: center;
             gap: 15px;
             padding: 12px 20px;
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.15) 0%, rgba(255, 170, 0, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(0, 212, 255, 0.15) 100%);
             border-radius: 12px;
-            border: 1px solid rgba(255, 204, 0, 0.4);
+            border: 1px solid rgba(0, 122, 255, 0.4);
             position: relative;
             z-index: 1;
         }
         .btc-icon {
             font-size: 1.8rem;
-            color: #ffcc00;
-            filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+            color: #007aff;
+            filter: drop-shadow(0 0 10px rgba(0, 122, 255, 0.5));
             animation: pulse 1.5s ease-in-out infinite;
         }
         @keyframes pulse {
@@ -117,8 +117,8 @@
         .btc-amount {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #ffcc00;
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            color: #007aff;
+            text-shadow: 0 0 15px rgba(0, 122, 255, 0.5);
         }
         
         .api-status-container {
@@ -135,22 +135,22 @@
             border-radius: 10px;
             font-size: 0.9rem;
             font-weight: 700;
-            background: rgba(255, 204, 0, 0.15);
-            border: 2px solid rgba(255, 204, 0, 0.4);
+            background: rgba(0, 122, 255, 0.15);
+            border: 2px solid rgba(0, 122, 255, 0.4);
             position: relative;
             overflow: hidden;
         }
         .api-status.online {
-            background: rgba(63, 185, 80, 0.2);
-            border-color: rgba(63, 185, 80, 0.5);
+            background: rgba(52, 199, 89, 0.2);
+            border-color: rgba(52, 199, 89, 0.5);
         }
         .api-status.offline {
-            background: rgba(218, 54, 51, 0.2);
-            border-color: rgba(218, 54, 51, 0.5);
+            background: rgba(255, 59, 48, 0.2);
+            border-color: rgba(255, 59, 48, 0.5);
         }
         .api-status.connecting {
-            background: rgba(243, 191, 64, 0.2);
-            border-color: rgba(243, 191, 64, 0.5);
+            background: rgba(255, 149, 0, 0.2);
+            border-color: rgba(255, 149, 0, 0.5);
         }
         .status-dot {
             width: 12px;
@@ -177,16 +177,16 @@
             100% { transform: scale(1.5); opacity: 0; }
         }
         .status-dot.online {
-            background: #3fb950;
-            box-shadow: 0 0 15px #3fb950;
+            background: #34c759;
+            box-shadow: 0 0 15px #34c759;
         }
         .status-dot.offline {
-            background: #da3633;
-            box-shadow: 0 0 15px #da3633;
+            background: #ff3b30;
+            box-shadow: 0 0 15px #ff3b30;
         }
         .status-dot.connecting {
-            background: #f3bf40;
-            box-shadow: 0 0 15px #f3bf40;
+            background: #ff9500;
+            box-shadow: 0 0 15px #ff9500;
         }
         
         .queue-info {
@@ -194,17 +194,17 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 140, 0, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(0, 100, 255, 0.15) 100%);
             border-radius: 10px;
-            border: 2px solid rgba(255, 170, 0, 0.4);
+            border: 2px solid rgba(0, 122, 255, 0.4);
             font-size: 0.9rem;
             font-weight: 600;
         }
         .queue-count {
             font-weight: 800;
-            color: #ffaa00;
+            color: #007aff;
             font-size: 1.1rem;
-            text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+            text-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
         }
         
         .alarm-control {
@@ -212,9 +212,9 @@
             align-items: center;
             gap: 12px;
             padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 140, 0, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(0, 100, 255, 0.15) 100%);
             border-radius: 12px;
-            border: 2px solid rgba(255, 170, 0, 0.4);
+            border: 2px solid rgba(0, 122, 255, 0.4);
         }
         
         .alarm-toggle {
@@ -223,13 +223,13 @@
             gap: 10px;
             cursor: pointer;
             font-weight: 600;
-            color: #ffaa00;
+            color: #007aff;
         }
         
         .toggle-slider {
             width: 50px;
             height: 26px;
-            background: #30363d;
+            background: #404040;
             border-radius: 26px;
             position: relative;
             transition: all 0.3s ease;
@@ -238,7 +238,7 @@
         .toggle-dot {
             width: 22px;
             height: 22px;
-            background: #7d8590;
+            background: #888;
             border-radius: 50%;
             position: absolute;
             top: 2px;
@@ -248,19 +248,19 @@
         }
         
         .alarm-toggle.active .toggle-slider {
-            background: rgba(255, 204, 0, 0.3);
+            background: rgba(0, 122, 255, 0.3);
         }
         
         .alarm-toggle.active .toggle-dot {
             transform: translateX(24px);
-            background: #ffcc00;
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.7);
+            background: #007aff;
+            box-shadow: 0 0 12px rgba(0, 122, 255, 0.7);
         }
         
         .test-alarm-btn {
             padding: 8px 16px;
-            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
-            color: #0a0e14;
+            background: linear-gradient(135deg, #007aff 0%, #00d4ff 100%);
+            color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -274,13 +274,13 @@
         
         .test-alarm-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
         }
         
         .reconnect-btn {
             padding: 10px 20px;
-            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
-            color: #0a0e14;
+            background: linear-gradient(135deg, #007aff 0%, #00d4ff 100%);
+            color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -307,7 +307,7 @@
         }
         .reconnect-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
         }
         .reconnect-btn:hover::before {
             left: 100%;
@@ -319,11 +319,83 @@
             box-shadow: none !important;
         }
         
+        /* ==================== API选择器样式 ==================== */
+        .api-selector-container {
+            background: rgba(40, 40, 40, 0.7);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid rgba(60, 60, 60, 0.8);
+        }
+        
+        .api-selector-title {
+            font-size: 0.95rem;
+            color: #00d4ff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .api-selector-title::before {
+            content: '🔌';
+            font-size: 1.2rem;
+        }
+        
+        .api-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .api-btn {
+            padding: 8px 14px;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
+            color: #aaa;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .api-btn:hover {
+            background: linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(80, 80, 80, 0.9) 100%);
+            color: #00d4ff;
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+        
+        .api-btn.active {
+            background: linear-gradient(135deg, #007aff 0%, #00a5ff 100%);
+            color: white;
+            border-color: #007aff;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+        }
+        
+        .api-btn.active:hover {
+            background: linear-gradient(135deg, #00a5ff 0%, #00c8ff 100%);
+        }
+        
+        .api-rotation-info {
+            font-size: 0.85rem;
+            color: #888;
+            padding: 8px 12px;
+            background: rgba(26, 26, 26, 0.5);
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid #00d4ff;
+        }
+        
         /* ==================== 控制面板 ==================== */
         .control-panel {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            border: 1px solid rgba(60, 60, 60, 0.8);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
@@ -338,7 +410,7 @@
             right: 0;
             width: 100px;
             height: 100px;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 122, 255, 0.1) 0%, transparent 70%);
             pointer-events: none;
         }
         
@@ -399,40 +471,40 @@
         }
         
         .btn-start {
-            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            background: linear-gradient(135deg, #34c759 0%, #28a745 100%);
             color: white;
         }
         .btn-pause {
-            background: linear-gradient(135deg, #da3633 0%, #f85149 100%);
+            background: linear-gradient(135deg, #ff3b30 0%, #dc3545 100%);
             color: white;
         }
         .btn-continue {
-            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
             color: white;
         }
         .btn-stats {
-            background: linear-gradient(135deg, #ffaa00 0%, #ffcc00 100%);
-            color: #0a0e14;
+            background: linear-gradient(135deg, #00d4ff 0%, #007aff 100%);
+            color: white;
         }
         .btn-export {
-            background: linear-gradient(135deg, #0e8a16 0%, #1a9c24 100%);
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
             color: white;
         }
         .btn-reconnect {
-            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
-            color: #0a0e14;
+            background: linear-gradient(135deg, #007aff 0%, #00d4ff 100%);
+            color: white;
         }
         
         /* ==================== 速度控制 ==================== */
         .speed-control {
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 2px solid rgba(48, 54, 61, 0.6);
+            border-top: 2px solid rgba(60, 60, 60, 0.6);
         }
         .speed-control label {
             display: block;
             margin-bottom: 15px;
-            color: #ffaa00;
+            color: #00d4ff;
             font-weight: 700;
             font-size: 1.1rem;
             display: flex;
@@ -453,7 +525,7 @@
             height: 12px;
             -webkit-appearance: none;
             appearance: none;
-            background: linear-gradient(90deg, #ffcc00 0%, #ffaa00 50%, #ffcc00 100%);
+            background: linear-gradient(90deg, #007aff 0%, #00d4ff 50%, #007aff 100%);
             border-radius: 10px;
             outline: none;
             cursor: pointer;
@@ -468,13 +540,13 @@
             border-radius: 50%;
             background: white;
             cursor: pointer;
-            border: 3px solid #ffcc00;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            border: 3px solid #007aff;
+            box-shadow: 0 0 15px rgba(0, 122, 255, 0.7);
             transition: all 0.3s ease;
         }
         .speed-slider::-webkit-slider-thumb:hover {
             transform: scale(1.2);
-            box-shadow: 0 0 20px rgba(255, 204, 0, 1);
+            box-shadow: 0 0 20px rgba(0, 122, 255, 1);
         }
         .speed-slider::-moz-range-thumb {
             width: 28px;
@@ -482,8 +554,8 @@
             border-radius: 50%;
             background: white;
             cursor: pointer;
-            border: 3px solid #ffcc00;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            border: 3px solid #007aff;
+            box-shadow: 0 0 15px rgba(0, 122, 255, 0.7);
         }
         
         .speed-value-display {
@@ -494,8 +566,8 @@
             text-align: center;
             font-weight: 800;
             font-size: 1.3rem;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            color: #007aff;
+            text-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
             pointer-events: none;
             z-index: 2;
         }
@@ -509,9 +581,9 @@
         }
         .speed-btn {
             padding: 10px 20px;
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
-            color: #8b949e;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
+            color: #aaa;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -525,30 +597,30 @@
             z-index: 1;
         }
         .speed-btn:hover {
-            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
-            color: #ffaa00;
-            border-color: rgba(255, 170, 0, 0.5);
+            background: linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(80, 80, 80, 0.9) 100%);
+            color: #00d4ff;
+            border-color: rgba(0, 212, 255, 0.5);
             transform: translateY(-2px);
         }
         .speed-btn.active {
-            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
-            color: #0a0e14;
-            border-color: #ffcc00;
-            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+            background: linear-gradient(135deg, #007aff 0%, #00d4ff 100%);
+            color: white;
+            border-color: #007aff;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
         }
         .speed-btn.active:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.6);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.6);
         }
         
         .speed-description {
             margin-top: 15px;
             padding: 15px;
-            background: rgba(33, 38, 45, 0.7);
+            background: rgba(40, 40, 40, 0.7);
             border-radius: 10px;
-            border-left: 4px solid #ffaa00;
+            border-left: 4px solid #00d4ff;
             font-size: 0.9rem;
-            color: #7d8590;
+            color: #888;
             line-height: 1.5;
         }
         
@@ -559,7 +631,7 @@
             gap: 15px;
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 2px solid rgba(48, 54, 61, 0.6);
+            border-top: 2px solid rgba(60, 60, 60, 0.6);
             font-size: 0.9rem;
             flex-wrap: wrap;
             justify-content: center;
@@ -569,45 +641,45 @@
             align-items: center;
             gap: 8px;
             padding: 8px 15px;
-            background: rgba(33, 38, 45, 0.7);
+            background: rgba(40, 40, 40, 0.7);
             border-radius: 8px;
-            border: 1px solid rgba(48, 54, 61, 0.6);
+            border: 1px solid rgba(60, 60, 60, 0.6);
         }
         .api-info-label {
-            color: #7d8590;
+            color: #888;
             font-weight: 500;
         }
         .api-info-value {
-            color: #ffaa00;
+            color: #00d4ff;
             font-weight: 700;
         }
         .api-provider {
             padding: 8px 16px;
             border-radius: 8px;
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.9) 0%, rgba(33, 38, 45, 0.9) 100%);
-            color: #ffaa00;
-            border: 2px solid rgba(255, 170, 0, 0.5);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(40, 40, 40, 0.9) 100%);
+            color: #00d4ff;
+            border: 2px solid rgba(0, 212, 255, 0.5);
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         .api-provider.active {
-            background: linear-gradient(135deg, rgba(63, 185, 80, 0.2) 0%, rgba(63, 185, 80, 0.1) 100%);
-            color: #3fb950;
-            border-color: rgba(63, 185, 80, 0.6);
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.2) 0%, rgba(52, 199, 89, 0.1) 100%);
+            color: #34c759;
+            border-color: rgba(52, 199, 89, 0.6);
         }
         .api-provider.active::before {
             content: '✓';
-            color: #3fb950;
+            color: #34c759;
             font-weight: bold;
         }
         
         /* ==================== 统计面板 ==================== */
         .stats-panel {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            border: 1px solid rgba(60, 60, 60, 0.8);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
@@ -631,7 +703,7 @@
             position: relative;
         }
         .panel-header h3 {
-            color: #ffaa00;
+            color: #00d4ff;
             font-size: 1.3rem;
             font-weight: 800;
             text-transform: uppercase;
@@ -639,7 +711,7 @@
         }
         .panel-icon {
             font-size: 1.5rem;
-            color: #ffaa00;
+            color: #00d4ff;
             animation: bounce 2s infinite;
         }
         @keyframes bounce {
@@ -653,8 +725,8 @@
             gap: 20px;
         }
         .stat-card {
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
             border-radius: 12px;
             padding: 25px 20px;
             text-align: center;
@@ -670,42 +742,42 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #ffcc00, #ffaa00);
+            background: linear-gradient(90deg, #007aff, #00d4ff);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
         }
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: #ffcc00;
-            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
+            border-color: #007aff;
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
         }
         .stat-card:hover::before {
             transform: scaleX(1);
         }
         .stat-card.highlight {
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.1) 0%, rgba(255, 170, 0, 0.1) 100%);
-            border-color: rgba(255, 204, 0, 0.5);
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border-color: rgba(0, 122, 255, 0.5);
         }
         .stat-card.highlight:hover {
-            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.5);
         }
         
         .stat-value {
             font-size: 2.2rem;
             font-weight: 900;
-            color: #ffcc00;
+            color: #007aff;
             margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            text-shadow: 0 0 15px rgba(0, 122, 255, 0.5);
             font-family: 'Consolas', 'Monaco', monospace;
         }
         .stat-card.highlight .stat-value {
-            color: #3fb950;
-            text-shadow: 0 0 15px rgba(63, 185, 80, 0.5);
+            color: #34c759;
+            text-shadow: 0 0 15px rgba(52, 199, 89, 0.5);
         }
         .stat-label {
             font-size: 0.85rem;
-            color: #ffcc00;
+            color: #007aff;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -713,9 +785,9 @@
         
         /* ==================== 当前扫描面板 ==================== */
         .current-scan {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            border: 1px solid rgba(60, 60, 60, 0.8);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
@@ -733,8 +805,8 @@
         }
         
         .scan-info {
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
             border-radius: 12px;
             padding: 25px;
             position: relative;
@@ -747,14 +819,14 @@
             right: 0;
             width: 100px;
             height: 100px;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 122, 255, 0.1) 0%, transparent 70%);
         }
         
         .info-row {
             display: flex;
             margin-bottom: 20px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+            border-bottom: 1px solid rgba(60, 60, 60, 0.6);
             align-items: flex-start;
         }
         .info-row:last-child {
@@ -765,7 +837,7 @@
         .info-label {
             width: 100px;
             font-weight: 700;
-            color: #ffaa00;
+            color: #00d4ff;
             font-size: 0.95rem;
             flex-shrink: 0;
             padding-top: 2px;
@@ -778,28 +850,28 @@
             line-height: 1.5;
         }
         .mnemonic-value {
-            color: #ffcc00;
+            color: #007aff;
             font-weight: 600;
-            background: rgba(255, 204, 0, 0.1);
+            background: rgba(0, 122, 255, 0.1);
             padding: 10px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 204, 0, 0.3);
+            border: 1px solid rgba(0, 122, 255, 0.3);
         }
         .address-value {
-            color: #58a6ff;
+            color: #64d2ff;
             font-weight: 500;
-            background: rgba(88, 166, 255, 0.1);
+            background: rgba(100, 210, 255, 0.1);
             padding: 10px;
             border-radius: 8px;
-            border: 1px solid rgba(88, 166, 255, 0.3);
+            border: 1px solid rgba(100, 210, 255, 0.3);
         }
         .private-key-value {
-            color: #d2a8ff;
+            color: #d4a5ff;
             font-weight: 500;
-            background: rgba(210, 168, 255, 0.1);
+            background: rgba(212, 165, 255, 0.1);
             padding: 10px;
             border-radius: 8px;
-            border: 1px solid rgba(210, 168, 255, 0.3);
+            border: 1px solid rgba(212, 165, 255, 0.3);
         }
         .balance-value {
             font-size: 1.8rem;
@@ -811,30 +883,30 @@
             text-align: center;
         }
         .balance-positive {
-            color: #3fb950;
-            background: rgba(63, 185, 80, 0.15);
-            border: 2px solid rgba(63, 185, 80, 0.5);
-            text-shadow: 0 0 15px rgba(63, 185, 80, 0.5);
+            color: #34c759;
+            background: rgba(52, 199, 89, 0.15);
+            border: 2px solid rgba(52, 199, 89, 0.5);
+            text-shadow: 0 0 15px rgba(52, 199, 89, 0.5);
             animation: balanceGlow 2s infinite alternate;
         }
         @keyframes balanceGlow {
-            from { box-shadow: 0 0 10px rgba(63, 185, 80, 0.3); }
-            to { box-shadow: 0 0 20px rgba(63, 185, 80, 0.7); }
+            from { box-shadow: 0 0 10px rgba(52, 199, 89, 0.3); }
+            to { box-shadow: 0 0 20px rgba(52, 199, 89, 0.7); }
         }
         .balance-zero {
-            color: #7d8590;
-            background: rgba(125, 133, 144, 0.1);
-            border: 2px solid rgba(125, 133, 144, 0.3);
+            color: #888;
+            background: rgba(136, 136, 136, 0.1);
+            border: 2px solid rgba(136, 136, 136, 0.3);
         }
         .balance-failed {
-            color: #da3633;
-            background: rgba(218, 54, 51, 0.15);
-            border: 2px solid rgba(218, 54, 51, 0.5);
+            color: #ff3b30;
+            background: rgba(255, 59, 48, 0.15);
+            border: 2px solid rgba(255, 59, 48, 0.5);
         }
         .balance-checking {
-            color: #f3bf40;
-            background: rgba(243, 191, 64, 0.15);
-            border: 2px solid rgba(243, 191, 64, 0.5);
+            color: #ff9500;
+            background: rgba(255, 149, 0, 0.15);
+            border: 2px solid rgba(255, 149, 0, 0.5);
         }
         
         .action-buttons {
@@ -845,9 +917,9 @@
         }
         .action-btn {
             padding: 12px 20px;
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
-            color: #e6edf3;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
+            color: #f0f0f0;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
@@ -875,9 +947,9 @@
             z-index: -1;
         }
         .action-btn:hover {
-            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(80, 80, 80, 0.9) 100%);
             transform: translateY(-3px);
-            border-color: #ffcc00;
+            border-color: #007aff;
         }
         .action-btn:hover::before {
             left: 100%;
@@ -888,9 +960,9 @@
         
         /* ==================== 巡查面板 ==================== */
         .patrol-panel {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            border: 1px solid rgba(60, 60, 60, 0.8);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
@@ -915,10 +987,10 @@
         }
         .patrol-controls input, .patrol-controls select {
             padding: 12px 18px;
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
             border-radius: 8px;
-            color: #e6edf3;
+            color: #f0f0f0;
             font-size: 0.95rem;
             transition: all 0.3s ease;
             flex: 1;
@@ -926,15 +998,15 @@
             outline: none;
         }
         .patrol-controls input:focus, .patrol-controls select:focus {
-            border-color: #ffcc00;
-            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
         }
         .patrol-controls input::placeholder {
-            color: #7d8590;
+            color: #888;
         }
         .patrol-controls button {
             padding: 12px 24px;
-            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -961,7 +1033,7 @@
         }
         .patrol-controls button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(31, 111, 235, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
         }
         .patrol-controls button:hover::before {
             left: 100%;
@@ -970,26 +1042,26 @@
         .table-container {
             max-height: 400px;
             overflow-y: auto;
-            border: 2px solid rgba(48, 54, 61, 0.8);
+            border: 2px solid rgba(60, 60, 60, 0.8);
             border-radius: 10px;
-            background: rgba(22, 27, 34, 0.8);
+            background: rgba(26, 26, 26, 0.8);
             margin-bottom: 20px;
             scrollbar-width: thin;
-            scrollbar-color: #ffcc00 rgba(33, 38, 45, 0.8);
+            scrollbar-color: #007aff rgba(40, 40, 40, 0.8);
         }
         .table-container::-webkit-scrollbar {
             width: 8px;
         }
         .table-container::-webkit-scrollbar-track {
-            background: rgba(33, 38, 45, 0.8);
+            background: rgba(40, 40, 40, 0.8);
             border-radius: 4px;
         }
         .table-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #ffcc00 0%, #ffaa00 100%);
+            background: linear-gradient(135deg, #007aff 0%, #00d4ff 100%);
             border-radius: 4px;
         }
         .table-container::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #ffaa00 0%, #ffcc00 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #007aff 100%);
         }
         
         .patrol-table {
@@ -998,14 +1070,14 @@
             font-size: 0.9rem;
         }
         .patrol-table th {
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.95) 0%, rgba(48, 54, 61, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.95) 0%, rgba(60, 60, 60, 0.95) 100%);
             position: sticky;
             top: 0;
             padding: 18px 15px;
             text-align: left;
             font-weight: 700;
-            color: #7d8590;
-            border-bottom: 3px solid rgba(48, 54, 61, 0.8);
+            color: #888;
+            border-bottom: 3px solid rgba(60, 60, 60, 0.8);
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1013,40 +1085,40 @@
         }
         .patrol-table td {
             padding: 15px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            border-bottom: 1px solid rgba(60, 60, 60, 0.5);
             transition: all 0.2s ease;
         }
         .patrol-table tr {
             transition: all 0.2s ease;
         }
         .patrol-table tr:hover {
-            background: rgba(255, 204, 0, 0.1);
+            background: rgba(0, 122, 255, 0.1);
             transform: translateX(5px);
         }
         .patrol-table tr.has-balance {
-            background: rgba(63, 185, 80, 0.1);
+            background: rgba(52, 199, 89, 0.1);
         }
         .patrol-table tr.has-balance:hover {
-            background: rgba(63, 185, 80, 0.15);
+            background: rgba(52, 199, 89, 0.15);
         }
         .patrol-table tr.failed {
-            background: rgba(218, 54, 51, 0.1);
+            background: rgba(255, 59, 48, 0.1);
         }
         .patrol-table tr.failed:hover {
-            background: rgba(218, 54, 51, 0.15);
+            background: rgba(255, 59, 48, 0.15);
         }
         
         .mnemonic-cell {
             max-width: 200px;
             word-break: break-word;
-            color: #ffcc00;
+            color: #007aff;
             font-weight: 500;
             line-height: 1.4;
         }
         .address-cell {
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 0.85rem;
-            color: #58a6ff;
+            color: #64d2ff;
             letter-spacing: 0.5px;
         }
         .balance-cell {
@@ -1054,18 +1126,18 @@
             font-size: 1rem;
         }
         .balance-cell.positive {
-            color: #3fb950;
-            text-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
+            color: #34c759;
+            text-shadow: 0 0 10px rgba(52, 199, 89, 0.3);
         }
         .balance-cell.zero {
-            color: #7d8590;
+            color: #888;
         }
         .balance-cell.failed {
-            color: #da3633;
+            color: #ff3b30;
         }
         .table-btn {
             padding: 8px 16px;
-            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
             color: white;
             border: none;
             border-radius: 6px;
@@ -1090,7 +1162,7 @@
         }
         .table-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(31, 111, 235, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
         }
         .table-btn:hover::before {
             left: 100%;
@@ -1105,9 +1177,9 @@
         }
         .page-btn {
             padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
-            color: #e6edf3;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
+            color: #f0f0f0;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -1130,33 +1202,33 @@
             z-index: -1;
         }
         .page-btn:hover {
-            background: linear-gradient(135deg, rgba(48, 54, 61, 0.9) 0%, rgba(66, 74, 83, 0.9) 100%);
-            border-color: #ffcc00;
+            background: linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(80, 80, 80, 0.9) 100%);
+            border-color: #007aff;
             transform: translateY(-2px);
         }
         .page-btn:hover::before {
             left: 100%;
         }
         .page-btn.active {
-            background: linear-gradient(135deg, #1f6feb 0%, #2a7bf0 100%);
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
             color: white;
-            border-color: #1f6feb;
-            box-shadow: 0 4px 12px rgba(31, 111, 235, 0.4);
+            border-color: #007aff;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
         }
         .page-btn.active:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(31, 111, 235, 0.6);
+            box-shadow: 0 6px 15px rgba(0, 122, 255, 0.6);
         }
         
         /* ==================== 发现余额面板 ==================== */
         .found-balances {
-            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(33, 38, 45, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
             backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 204, 0, 0.8);
+            border: 2px solid rgba(0, 122, 255, 0.8);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(255, 204, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 122, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -1176,7 +1248,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 204, 0, 0.05) 50%, transparent 70%);
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 122, 255, 0.05) 50%, transparent 70%);
             animation: shine 3s infinite linear;
             pointer-events: none;
         }
@@ -1186,7 +1258,7 @@
         }
         
         .found-balances h3 {
-            color: #ffcc00;
+            color: #007aff;
             margin-bottom: 25px;
             font-size: 1.3rem;
             display: flex;
@@ -1202,8 +1274,8 @@
         }
         
         .balance-item {
-            background: linear-gradient(135deg, rgba(33, 38, 45, 0.9) 0%, rgba(48, 54, 61, 0.9) 100%);
-            border: 2px solid rgba(48, 54, 61, 0.8);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9) 0%, rgba(60, 60, 60, 0.9) 100%);
+            border: 2px solid rgba(60, 60, 60, 0.8);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 20px;
@@ -1218,22 +1290,22 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3fb950, #2ea043);
+            background: linear-gradient(90deg, #34c759, #28a745);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
         }
         .balance-item:hover {
             transform: translateY(-5px);
-            border-color: #3fb950;
-            box-shadow: 0 10px 25px rgba(63, 185, 80, 0.3);
+            border-color: #34c759;
+            box-shadow: 0 10px 25px rgba(52, 199, 89, 0.3);
         }
         .balance-item:hover::before {
             transform: scaleX(1);
         }
         
         .balance-header {
-            color: #3fb950;
+            color: #34c759;
             font-weight: 800;
             margin-bottom: 15px;
             display: flex;
@@ -1243,20 +1315,20 @@
         }
         .balance-amount {
             font-size: 2.5rem;
-            color: #3fb950;
+            color: #34c759;
             font-weight: 900;
             text-align: center;
             margin: 25px 0;
-            text-shadow: 0 0 20px rgba(63, 185, 80, 0.5);
+            text-shadow: 0 0 20px rgba(52, 199, 89, 0.5);
             animation: amountGlow 2s infinite alternate;
         }
         @keyframes amountGlow {
-            from { text-shadow: 0 0 10px rgba(63, 185, 80, 0.5); }
-            to { text-shadow: 0 0 25px rgba(63, 185, 80, 0.8); }
+            from { text-shadow: 0 0 10px rgba(52, 199, 89, 0.5); }
+            to { text-shadow: 0 0 25px rgba(52, 199, 89, 0.8); }
         }
         
         .balance-details {
-            background: rgba(33, 38, 45, 0.7);
+            background: rgba(40, 40, 40, 0.7);
             border-radius: 8px;
             padding: 15px;
             margin-bottom: 20px;
@@ -1268,12 +1340,12 @@
         }
         .balance-detail-label {
             width: 80px;
-            color: #7d8590;
+            color: #888;
             font-weight: 500;
         }
         .balance-detail-value {
             flex: 1;
-            color: #e6edf3;
+            color: #f0f0f0;
             font-family: 'Consolas', 'Monaco', monospace;
             word-break: break-all;
         }
@@ -1288,8 +1360,8 @@
             position: fixed;
             top: 25px;
             right: 25px;
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.98) 0%, rgba(255, 170, 0, 0.98) 100%);
-            color: #0a0e14;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.98) 0%, rgba(0, 212, 255, 0.98) 100%);
+            color: white;
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
@@ -1346,7 +1418,7 @@
         .notification-btn {
             padding: 10px 20px;
             background: rgba(255, 255, 255, 0.2);
-            color: #0a0e14;
+            color: white;
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 8px;
             cursor: pointer;
@@ -1364,7 +1436,7 @@
         }
         .notification-btn.primary {
             background: rgba(255, 255, 255, 0.3);
-            border-color: #0a0e14;
+            border-color: white;
             font-weight: 700;
         }
         
@@ -1373,9 +1445,9 @@
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(255, 204, 0, 0.3);
+            border: 2px solid rgba(0, 122, 255, 0.3);
             border-radius: 50%;
-            border-top-color: #ffcc00;
+            border-top-color: #007aff;
             animation: spin 1s linear infinite;
         }
         
@@ -1446,7 +1518,7 @@
         <!-- 头部 -->
         <div class="header">
             <h1>⚡ BTC碰撞 2.0</h1>
-            <div class="version">v1.0 - 高速稳定版</div>
+            <div class="version">v1.3 - 统计逻辑修复版</div>
             <div class="subtitle">完全独立的BTC地址扫描解决方案</div>
         </div>
         
@@ -1503,6 +1575,25 @@
                 <button class="btn btn-reconnect" onclick="manualReconnect()">
                     <span>↻</span> 强制重连
                 </button>
+            </div>
+            
+            <!-- API选择器 -->
+            <div class="api-selector-container">
+                <div class="api-selector-title">API数量选择 (每100个地址自动切换)</div>
+                <div class="api-buttons" id="apiButtons">
+                    <button class="api-btn active" onclick="setApiCount(1)">1个API</button>
+                    <button class="api-btn" onclick="setApiCount(2)">2个API</button>
+                    <button class="api-btn" onclick="setApiCount(3)">3个API</button>
+                    <button class="api-btn" onclick="setApiCount(4)">4个API</button>
+                    <button class="api-btn" onclick="setApiCount(5)">5个API</button>
+                    <button class="api-btn" onclick="setApiCount(6)">6个API</button>
+                    <button class="api-btn" onclick="setApiCount(7)">7个API</button>
+                    <button class="api-btn" onclick="setApiCount(8)">8个API</button>
+                    <button class="api-btn" onclick="setApiCount(9)">9个API</button>
+                </div>
+                <div class="api-rotation-info">
+                    当前使用 <span id="apiCountDisplay">1</span> 个API | 自动轮换: 每 <span id="rotationInterval">100</span> 个地址切换一次 | 当前API索引: <span id="currentApiIndexDisplay">0</span>
+                </div>
             </div>
             
             <div class="speed-control">
@@ -1695,7 +1786,7 @@
                     </thead>
                     <tbody id="patrolTableBody">
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                            <td colspan="5" style="text-align: center; padding: 60px; color: #888; font-size: 1.1rem;">
                                 🚀 准备就绪，点击"开始扫描"按钮启动BTC地址扫描
                             </td>
                         </tr>
@@ -1715,7 +1806,7 @@
                 <h3>发现余额记录</h3>
             </div>
             <div id="foundBalancesList">
-                <div style="text-align: center; color: #7d8590; padding: 40px; font-size: 1.1rem;">
+                <div style="text-align: center; color: #888; padding: 40px; font-size: 1.1rem;">
                     💡 尚未发现任何BTC余额，扫描继续进行中...
                 </div>
             </div>
@@ -1754,16 +1845,19 @@
         let checkedCounter = 0;
         let foundCounter = 0;
         let totalBTC = 0;
-        let generateInterval;
-        let checkInterval;
-        let generateSpeed = 1000; // 默认1秒1个
+        let checkTimer = null;
         
         // API连接状态
         let apiConnected = false;
         let isReconnecting = false;
         let retryCount = 0;
         const maxRetries = 5;
-        let apiSwitchCount = 0;
+        
+        // API管理
+        let currentApiIndex = 0;
+        let currentApiCount = 1; // 默认使用1个API
+        let checksPerApi = 100; // 每个API检查100个地址后切换
+        let currentCheckCount = 0; // 当前API已检查的地址数
         
         // 存储所有结果
         let allResults = [];
@@ -1780,36 +1874,14 @@
         // 是否正在检查余额
         let isCheckingBalance = false;
         
-        // 当前API索引
-        let currentApiIndex = 0;
+        // 速度控制
+        let checkInterval = 1000; // 默认1秒1个
         
-        // ==================== API管理系统（优化的API源） ====================
+        // ==================== 改进的API管理系统 ====================
         let apiProviders = [
             {
-                name: 'blockchain.info',
-                url: (address) => `https://blockchain.info/balance?active=${address}`,
-                parse: async (data, address) => {
-                    try {
-                        const info = data[address];
-                        return info ? {
-                            balance: info.final_balance || 0,
-                            received: info.total_received || 0,
-                            txCount: info.n_tx || 0,
-                            success: true
-                        } : { balance: -1, success: false };
-                    } catch (e) {
-                        return { balance: -1, success: false };
-                    }
-                },
-                active: true,
-                success: 0,
-                attempts: 0,
-                lastUsed: 0,
-                timeout: 3000
-            },
-            {
-                name: 'blockchain.info quick',
-                url: (address) => `https://blockchain.info/q/addressbalance/${address}`,
+                name: 'Blockchain.info',
+                url: (address) => `https://blockchain.info/q/addressbalance/${address}?confirmations=0`,
                 parse: async (text, address) => {
                     try {
                         const balance = parseInt(text);
@@ -1827,12 +1899,55 @@
                 success: 0,
                 attempts: 0,
                 lastUsed: 0,
-                timeout: 3000
+                timeout: 5000
             },
             {
-                name: 'blockchair',
-                url: (address) => `https://api.blockchair.com/bitcoin/dashboards/address/${address}`,
+                name: 'Blockchain.info (JSON)',
+                url: (address) => `https://blockchain.info/balance?active=${address}&confirmations=0`,
                 parse: async (data, address) => {
+                    try {
+                        const info = data[address];
+                        return info ? {
+                            balance: info.final_balance || 0,
+                            received: info.total_received || 0,
+                            txCount: info.n_tx || 0,
+                            success: true
+                        } : { balance: -1, success: false };
+                    } catch (e) {
+                        return { balance: -1, success: false };
+                    }
+                },
+                active: true,
+                success: 0,
+                attempts: 0,
+                lastUsed: 0,
+                timeout: 6000
+            },
+            {
+                name: 'BlockCypher',
+                url: (address) => `https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`,
+                parse: async (data) => {
+                    try {
+                        return {
+                            balance: data.balance || 0,
+                            received: data.total_received || 0,
+                            txCount: data.n_tx || 0,
+                            success: true
+                        };
+                    } catch (e) {
+                        return { balance: -1, success: false };
+                    }
+                },
+                active: true,
+                success: 0,
+                attempts: 0,
+                lastUsed: 0,
+                timeout: 5000
+            },
+            {
+                name: 'Blockchair',
+                url: (address) => `https://api.blockchair.com/bitcoin/dashboards/address/${address}`,
+                parse: async (data) => {
                     try {
                         const addrData = data.data?.[address]?.address;
                         return addrData ? {
@@ -1849,10 +1964,10 @@
                 success: 0,
                 attempts: 0,
                 lastUsed: 0,
-                timeout: 4000
+                timeout: 6000
             },
             {
-                name: 'mempool.space',
+                name: 'Mempool.space',
                 url: (address) => `https://mempool.space/api/address/${address}`,
                 parse: async (data) => {
                     try {
@@ -1870,17 +1985,59 @@
                 success: 0,
                 attempts: 0,
                 lastUsed: 0,
+                timeout: 7000
+            },
+            {
+                name: 'Blockstream',
+                url: (address) => `https://blockstream.info/api/address/${address}`,
+                parse: async (data) => {
+                    try {
+                        return {
+                            balance: data.chain_stats.funded_txo_sum - data.chain_stats.spent_txo_sum,
+                            received: data.chain_stats.funded_txo_sum,
+                            txCount: data.chain_stats.tx_count,
+                            success: true
+                        };
+                    } catch (e) {
+                        return { balance: -1, success: false };
+                    }
+                },
+                active: true,
+                success: 0,
+                attempts: 0,
+                lastUsed: 0,
+                timeout: 6000
+            },
+            {
+                name: 'SoChain',
+                url: (address) => `https://chain.so/api/v2/address/BTC/${address}`,
+                parse: async (data) => {
+                    try {
+                        return {
+                            balance: Math.round(parseFloat(data.data.balance || 0) * 100000000),
+                            received: Math.round(parseFloat(data.data.total_received || 0) * 100000000),
+                            txCount: parseInt(data.data.total_txs || 0),
+                            success: true
+                        };
+                    } catch (e) {
+                        return { balance: -1, success: false };
+                    }
+                },
+                active: true,
+                success: 0,
+                attempts: 0,
+                lastUsed: 0,
                 timeout: 5000
             },
             {
-                name: 'btc.com',
+                name: 'BTC.com',
                 url: (address) => `https://chain.api.btc.com/v3/address/${address}`,
                 parse: async (data) => {
                     try {
                         const addrData = data.data;
                         return addrData ? {
-                            balance: (addrData.balance || 0) * 100000000,
-                            received: (addrData.received || 0) * 100000000,
+                            balance: Math.round((addrData.balance || 0) * 100000000),
+                            received: Math.round((addrData.received || 0) * 100000000),
                             txCount: addrData.tx_count || 0,
                             success: true
                         } : { balance: -1, success: false };
@@ -1892,7 +2049,29 @@
                 success: 0,
                 attempts: 0,
                 lastUsed: 0,
-                timeout: 4000
+                timeout: 5000
+            },
+            {
+                name: 'Insight',
+                url: (address) => `https://insight.bitpay.com/api/addr/${address}/balance`,
+                parse: async (text, address) => {
+                    try {
+                        const balance = parseInt(text);
+                        return {
+                            balance: isNaN(balance) ? 0 : balance,
+                            received: 0,
+                            txCount: 0,
+                            success: !isNaN(balance)
+                        };
+                    } catch (e) {
+                        return { balance: -1, success: false };
+                    }
+                },
+                active: true,
+                success: 0,
+                attempts: 0,
+                lastUsed: 0,
+                timeout: 5000
             }
         ];
 
@@ -1903,48 +2082,99 @@
         let alarmEnabled = true;
         let alarmSound = null;
         
+        // ==================== API选择功能 ====================
+        function setApiCount(count) {
+            currentApiCount = Math.min(Math.max(1, count), 9);
+            currentApiIndex = 0;
+            currentCheckCount = 0;
+            
+            // 更新按钮状态
+            const buttons = document.querySelectorAll('.api-btn');
+            buttons.forEach((btn, index) => {
+                if (index + 1 === currentApiCount) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 更新显示
+            document.getElementById('apiCountDisplay').textContent = currentApiCount;
+            document.getElementById('currentApiIndexDisplay').textContent = currentApiIndex;
+            
+            // 重新测试所有API
+            testAllAPIs().then(success => {
+                if (success) {
+                    showNotification('API设置已更新', `现在使用 ${currentApiCount} 个API，每${checksPerApi}个地址自动切换`, 'info');
+                }
+            });
+            
+            console.log(`设置为使用 ${currentApiCount} 个API`);
+        }
+
+        function rotateAPI() {
+            currentCheckCount++;
+            
+            // 每检查100个地址切换一次API
+            if (currentCheckCount >= checksPerApi) {
+                currentApiIndex = (currentApiIndex + 1) % currentApiCount;
+                currentCheckCount = 0;
+                
+                // 更新显示
+                document.getElementById('currentApiIndexDisplay').textContent = currentApiIndex;
+                updateApiDisplay();
+                
+                console.log(`切换到下一个API: ${currentApiIndex} (${apiProviders[currentApiIndex]?.name || '未知'})`);
+            }
+        }
+
         // ==================== 速度控制 ====================
         function updateSpeed() {
             const slider = document.getElementById('speedSlider');
             const speedValue = parseInt(slider.value);
             
-            let actualSpeed = 1;
+            let actualInterval = 1000;
             let displayText = "1";
             
             switch(speedValue) {
                 case 1:
-                    actualSpeed = 1;
+                    actualInterval = 1000;
                     displayText = "1";
                     break;
                 case 2:
-                    actualSpeed = 2;
+                    actualInterval = 500;
                     displayText = "2";
                     break;
                 case 3:
-                    actualSpeed = 5;
+                    actualInterval = 200;
                     displayText = "5";
                     break;
                 case 4:
-                    actualSpeed = 10;
+                    actualInterval = 100;
                     displayText = "10";
                     break;
                 case 5:
-                    actualSpeed = 20;
+                    actualInterval = 50;
                     displayText = "20";
                     break;
             }
             
             document.getElementById('speedValueDisplay').textContent = displayText + " 个/秒";
-            generateSpeed = 1000 / actualSpeed;
+            checkInterval = actualInterval;
             
             updateSpeedButtons(displayText);
             
             if (isScanning) {
-                clearInterval(generateInterval);
-                generateInterval = setInterval(generateAndCheck, generateSpeed);
+                clearTimeout(checkTimer);
+                if (actualInterval > 0) {
+                    checkTimer = setTimeout(() => generateAndCheck(), actualInterval);
+                } else {
+                    // 如果是极速模式，立即开始下一个
+                    setTimeout(() => generateAndCheck(), 0);
+                }
             }
             
-            console.log(`速度设置为: ${displayText}个/秒, 间隔: ${generateSpeed}ms`);
+            console.log(`速度设置为: ${displayText}个/秒, 间隔: ${actualInterval}ms`);
         }
 
         function setSpeed(speed) {
@@ -1984,55 +2214,13 @@
             });
         }
 
-        // ==================== 智能API选择器 ====================
-        function getBestApiProvider() {
-            const activeProviders = apiProviders.filter(p => p.active);
-            if (activeProviders.length === 0) return null;
-            
-            activeProviders.sort((a, b) => {
-                const successRateA = a.attempts > 0 ? a.success / a.attempts : 0;
-                const successRateB = b.attempts > 0 ? b.success / b.attempts : 0;
-                return successRateB - successRateA;
-            });
-            
-            return activeProviders[0];
-        }
-
-        function switchToNextApi() {
-            apiSwitchCount++;
-            
-            if (apiProviders[currentApiIndex]) {
-                const provider = apiProviders[currentApiIndex];
-                if (provider.attempts > 3 && provider.success / provider.attempts < 0.3) {
-                    provider.active = false;
-                    console.log(`API ${provider.name} 因低成功率被禁用`);
-                }
-            }
-            
-            const availableProviders = apiProviders.filter((p, index) => 
-                p.active && index !== currentApiIndex
-            );
-            
-            if (availableProviders.length > 0) {
-                availableProviders.sort((a, b) => {
-                    const rateA = a.attempts > 0 ? a.success / a.attempts : 1;
-                    const rateB = b.attempts > 0 ? b.success / b.attempts : 1;
-                    return rateB - rateA;
-                });
-                
-                currentApiIndex = apiProviders.findIndex(p => p.name === availableProviders[0].name);
-                updateApiDisplay();
-                console.log(`切换到API: ${availableProviders[0].name}`);
-                return true;
-            }
-            
-            return false;
-        }
-
         // ==================== 快速余额检查函数 ====================
         async function checkBalanceFast(address) {
             apiTotalAttempts++;
-            const provider = apiProviders[currentApiIndex];
+            
+            // 获取当前API（限制在当前选择的API数量内）
+            const providerIndex = currentApiIndex % currentApiCount;
+            const provider = apiProviders[providerIndex];
             
             if (!provider) {
                 console.error('没有可用的API提供商');
@@ -2047,13 +2235,13 @@
             
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), provider.timeout || 3000);
+                const timeoutId = setTimeout(() => controller.abort(), provider.timeout || 5000);
                 
                 const response = await fetch(provider.url(address), {
                     method: 'GET',
                     signal: controller.signal,
                     headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                         'Accept': 'application/json'
                     }
                 });
@@ -2078,16 +2266,30 @@
                         provider.lastUsed = Date.now();
                         apiTotalSuccess++;
                         updateAPISuccessRate();
+                        
+                        // 自动轮换API
+                        rotateAPI();
+                        
                         return { ...result, apiSuccess: true };
                     } else {
                         provider.attempts++;
-                        switchToNextApi();
+                        
+                        // 如果当前API失败，尝试下一个
+                        currentApiIndex = (currentApiIndex + 1) % currentApiCount;
+                        currentCheckCount = 0;
+                        updateApiDisplay();
+                        
                         return { ...result, apiSuccess: false };
                     }
                 } else {
                     clearTimeout(timeoutId);
                     provider.attempts++;
-                    switchToNextApi();
+                    
+                    // 如果当前API失败，尝试下一个
+                    currentApiIndex = (currentApiIndex + 1) % currentApiCount;
+                    currentCheckCount = 0;
+                    updateApiDisplay();
+                    
                     return {
                         balance: -1,
                         received: 0,
@@ -2097,9 +2299,13 @@
                     };
                 }
             } catch (error) {
-                clearTimeout(timeoutId);
                 provider.attempts++;
-                switchToNextApi();
+                
+                // 如果当前API失败，尝试下一个
+                currentApiIndex = (currentApiIndex + 1) % currentApiCount;
+                currentCheckCount = 0;
+                updateApiDisplay();
+                
                 return {
                     balance: -1,
                     received: 0,
@@ -2114,9 +2320,12 @@
         async function testAllAPIs() {
             updateApiStatus('测试API中...', 'connecting');
             const testAddress = "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa";
-            let workingApi = null;
             
-            const testPromises = apiProviders.map(async (provider, index) => {
+            // 只测试当前选择数量的API
+            const providersToTest = apiProviders.slice(0, currentApiCount);
+            let workingCount = 0;
+            
+            const testPromises = providersToTest.map(async (provider, index) => {
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 3000);
@@ -2134,28 +2343,31 @@
                     
                     if (response.ok) {
                         console.log(`API ${provider.name} 测试成功`);
-                        return { index, provider, success: true };
+                        provider.active = true;
+                        workingCount++;
+                        return true;
                     }
                 } catch (error) {
                     console.log(`API ${provider.name} 测试失败:`, error.message);
+                    provider.active = false;
                 }
-                return { index, provider, success: false };
+                return false;
             });
             
-            const results = await Promise.all(testPromises);
-            const workingAPIs = results.filter(r => r.success);
+            await Promise.all(testPromises);
             
-            if (workingAPIs.length > 0) {
-                const bestApi = workingAPIs[0];
-                currentApiIndex = bestApi.index;
+            if (workingCount > 0) {
+                currentApiIndex = 0;
+                currentCheckCount = 0;
                 apiConnected = true;
                 retryCount = 0;
                 updateApiDisplay();
                 updateApiStatus('在线', 'online');
-                console.log(`使用API: ${bestApi.provider.name}`);
+                console.log(`API测试完成，${workingCount}/${currentApiCount} 个API可用`);
                 return true;
             }
             
+            updateApiStatus('所有API离线', 'offline');
             return false;
         }
 
@@ -2165,7 +2377,7 @@
             isReconnecting = true;
             updateReconnectButton(true);
             
-            console.log("开始重连所有API...");
+            console.log("开始重连API...");
             
             const success = await testAllAPIs();
             
@@ -2173,7 +2385,7 @@
             updateReconnectButton(false);
             
             if (success) {
-                console.log("重连成功，API数量:", apiProviders.filter(p => p.active).length);
+                console.log("重连成功");
                 return true;
             } else {
                 retryCount++;
@@ -2247,19 +2459,19 @@
             document.getElementById('pauseButton').style.display = 'flex';
             document.getElementById('continueButton').style.display = 'none';
             
-            // 立即开始第一个扫描
+            // 开始第一个扫描
             generateAndCheck();
             
-            console.log(`扫描已开始，速度: ${1000/generateSpeed}个/秒`);
+            console.log(`扫描已开始，速度: ${1000/checkInterval}个/秒`);
         }
 
         function pauseScanner() {
             if (!isScanning) return;
             
             isScanning = false;
-            if (generateInterval) {
-                clearInterval(generateInterval);
-                generateInterval = null;
+            if (checkTimer) {
+                clearTimeout(checkTimer);
+                checkTimer = null;
             }
             
             document.getElementById('pauseButton').style.display = 'none';
@@ -2289,188 +2501,190 @@
             document.getElementById('pauseButton').style.display = 'flex';
             document.getElementById('continueButton').style.display = 'none';
             
-            // 立即开始下一个扫描
+            // 继续开始扫描
             generateAndCheck();
             
-            console.log(`扫描继续，速度: ${1000/generateSpeed}个/秒`);
+            console.log(`扫描继续，速度: ${1000/checkInterval}个/秒`);
         }
 
         async function generateAndCheck() {
             if (!isScanning || isCheckingBalance) return;
             
             isCheckingBalance = true;
-            scanCounter++;
-            
-            // 使用buidl.js随机生成助记词和地址
-            let words, address, privateKey;
             
             try {
-                const newmnemo = buidl.newMnemonic();
-                words = newmnemo.words;
+                // 生成新的助记词和地址
+                scanCounter++;
                 
-                const hdseed = buidl.mnemonic2SeedHex(words);
-                const addr = buidl.fromHDSeed(hdseed.seedHex, 0, 0, 0);
-                address = addr.addr;
-                privateKey = addr.pk;
-            } catch (error) {
-                console.error('生成助记词失败:', error);
-                words = '生成错误';
-                address = 'N/A';
-                privateKey = 'N/A';
-            }
-            
-            const addressData = {
-                id: scanCounter,
-                words: words,
-                address: address,
-                privateKey: privateKey
-            };
-            
-            // 更新当前扫描显示
-            updateCurrentScanBeforeCheck(addressData);
-            
-            document.getElementById('statGenerated').textContent = scanCounter;
-            document.getElementById('apiGenerated').textContent = scanCounter;
-            document.getElementById('currentScanNumber').textContent = `#${scanCounter}`;
-            
-            let retryCount = 0;
-            const maxRetries = 3;
-            let success = false;
-            
-            // 重试逻辑：如果查询失败，会重试直到成功
-            while (retryCount < maxRetries && isScanning) {
+                let words, address, privateKey;
+                
                 try {
-                    // 检查余额
-                    const balanceInfo = await checkBalanceFast(addressData.address);
+                    const newmnemo = buidl.newMnemonic();
+                    words = newmnemo.words;
                     
-                    checkedCounter++;  // 每次尝试都增加检测计数
-                    document.getElementById('statChecked').textContent = checkedCounter;
-                    document.getElementById('apiChecked').textContent = checkedCounter;
-                    
-                    if (balanceInfo.success) {
-                        const result = {
-                            id: addressData.id,
-                            words: addressData.words,
-                            address: addressData.address,
-                            privateKey: addressData.privateKey,
-                            balance: balanceInfo.balance,
-                            received: balanceInfo.received,
-                            txCount: balanceInfo.txCount,
-                            timestamp: new Date().toLocaleTimeString(),
-                            date: new Date().toISOString(),
-                            status: balanceInfo.balance > 0 ? 'positive' : 'zero'
-                        };
+                    const hdseed = buidl.mnemonic2SeedHex(words);
+                    const addr = buidl.fromHDSeed(hdseed.seedHex, 0, 0, 0);
+                    address = addr.addr;
+                    privateKey = addr.pk;
+                } catch (error) {
+                    console.error('生成助记词失败:', error);
+                    words = '生成错误';
+                    address = 'N/A';
+                    privateKey = 'N/A';
+                }
+                
+                const addressData = {
+                    id: scanCounter,
+                    words: words,
+                    address: address,
+                    privateKey: privateKey
+                };
+                
+                // 更新当前扫描显示（检查前）
+                updateCurrentScanBeforeCheck(addressData);
+                
+                // 立即更新生成计数
+                updateStats();
+                
+                let retryCount = 0;
+                const maxRetries = 2;
+                let success = false;
+                
+                while (retryCount < maxRetries && isScanning) {
+                    try {
+                        // 检查余额
+                        const balanceInfo = await checkBalanceFast(addressData.address);
                         
-                        currentData = result;
-                        allResults.unshift(result);
-                        
-                        updateCurrentScan(result);
-                        
-                        if (balanceInfo.balance > 0) {
-                            foundCounter++;
-                            totalBTC += balanceInfo.balance / 100000000;
-                            document.getElementById('statWithBalance').textContent = foundCounter;
-                            document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
+                        if (balanceInfo.success) {
+                            checkedCounter++;
                             
-                            updateTotalBTC();
-                            
-                            if (alarmEnabled) {
-                                playAlarm();
-                            }
-                            
-                            showBalanceNotification(result);
-                            updateFoundBalances();
-                        }
-                        
-                        refreshPatrolView();
-                        updateStats();
-                        
-                        // 成功，跳出重试循环
-                        success = true;
-                        break;
-                    } else {
-                        retryCount++;
-                        console.log(`余额检查失败，第${retryCount}次重试`);
-                        
-                        if (!balanceInfo.apiSuccess) {
-                            console.log("API检查失败，正在尝试重新连接...");
-                            updateApiStatus('重连中...', 'connecting');
-                            
-                            // 尝试自动重连
-                            await autoReconnect();
-                        }
-                        
-                        if (retryCount < maxRetries) {
-                            // 等待一段时间后重试
-                            await new Promise(resolve => setTimeout(resolve, 1000));
-                        } else {
-                            // 达到最大重试次数，记录为失败
-                            console.log("达到最大重试次数，记录为查询失败");
-                            
-                            const failedResult = {
+                            const result = {
                                 id: addressData.id,
                                 words: addressData.words,
                                 address: addressData.address,
                                 privateKey: addressData.privateKey,
-                                balance: -1,
-                                received: 0,
-                                txCount: 0,
+                                balance: balanceInfo.balance,
+                                received: balanceInfo.received,
+                                txCount: balanceInfo.txCount,
                                 timestamp: new Date().toLocaleTimeString(),
                                 date: new Date().toISOString(),
-                                status: 'failed'
+                                status: balanceInfo.balance > 0 ? 'positive' : 'zero'
                             };
                             
-                            currentData = failedResult;
-                            allResults.unshift(failedResult);
-                            updateCurrentScan(failedResult);
+                            currentData = result;
+                            allResults.unshift(result);
                             
-                            // 开始自动重连
-                            autoReconnect();
+                            updateCurrentScan(result);
+                            
+                            if (balanceInfo.balance > 0) {
+                                foundCounter++;
+                                totalBTC += balanceInfo.balance / 100000000;
+                                
+                                updateTotalBTC();
+                                
+                                if (alarmEnabled) {
+                                    playAlarm();
+                                }
+                                
+                                showBalanceNotification(result);
+                                updateFoundBalances();
+                            }
+                            
+                            refreshPatrolView();
+                            success = true;
+                            break;
+                        } else {
+                            retryCount++;
+                            console.log(`余额检查失败，第${retryCount}次重试`);
                         }
+                        
+                    } catch (error) {
+                        console.error('检查余额失败:', error);
+                        retryCount++;
                     }
+                }
+                
+                if (!success && isScanning) {
+                    // 最终失败的处理
+                    const failedResult = {
+                        id: addressData.id,
+                        words: addressData.words,
+                        address: addressData.address,
+                        privateKey: addressData.privateKey,
+                        balance: -1,
+                        received: 0,
+                        txCount: 0,
+                        timestamp: new Date().toLocaleTimeString(),
+                        date: new Date().toISOString(),
+                        status: 'failed'
+                    };
                     
-                } catch (error) {
-                    console.error('检查余额失败:', error);
-                    retryCount++;
-                    
-                    checkedCounter++;  // 错误尝试也计入检测计数
-                    document.getElementById('statChecked').textContent = checkedCounter;
-                    document.getElementById('apiChecked').textContent = checkedCounter;
-                    
-                    if (retryCount < maxRetries) {
-                        console.log(`第${retryCount}次重试`);
-                        await new Promise(resolve => setTimeout(resolve, 1000));
+                    currentData = failedResult;
+                    allResults.unshift(failedResult);
+                    updateCurrentScan(failedResult);
+                    // 失败的情况不计入checkedCounter
+                }
+                
+                // 更新统计
+                updateStats();
+                
+            } catch (error) {
+                console.error('生成或检查过程中出错:', error);
+            } finally {
+                isCheckingBalance = false;
+                
+                // 安排下一个扫描
+                if (isScanning) {
+                    clearTimeout(checkTimer);
+                    if (checkInterval > 0) {
+                        checkTimer = setTimeout(() => generateAndCheck(), checkInterval);
                     } else {
-                        const failedResult = {
-                            id: addressData.id,
-                            words: addressData.words,
-                            address: addressData.address,
-                            privateKey: addressData.privateKey,
-                            balance: -1,
-                            received: 0,
-                            txCount: 0,
-                            timestamp: new Date().toLocaleTimeString(),
-                            date: new Date().toISOString(),
-                            status: 'failed'
-                        };
-                        
-                        currentData = failedResult;
-                        allResults.unshift(failedResult);
-                        updateCurrentScan(failedResult);
-                        
-                        // 开始自动重连
-                        autoReconnect();
+                        // 如果是极速模式，立即开始下一个
+                        setTimeout(() => generateAndCheck(), 0);
                     }
                 }
             }
+        }
+
+        // ==================== 统计更新函数 ====================
+        function updateStats() {
+            const elapsedSeconds = scanStartTime ? Math.floor((Date.now() - scanStartTime) / 1000) : 0;
             
-            isCheckingBalance = false;
+            // 计算速度：成功检测的地址数 / 运行时间
+            const speed = elapsedSeconds > 0 ? (checkedCounter / elapsedSeconds).toFixed(1) : '0.0';
             
-            // 设置定时器进行下一个扫描
-            if (isScanning) {
-                clearInterval(generateInterval);
-                generateInterval = setInterval(generateAndCheck, generateSpeed);
-            }
+            // 计算成功率：成功检测的地址 / 已生成的地址
+            const validCheckedCounter = Math.min(checkedCounter, scanCounter);
+            const successRate = scanCounter > 0 ? 
+                Math.min(100, Math.round((validCheckedCounter / scanCounter) * 100)) : 0;
+            
+            // 计算队列长度：已生成但未检测的地址（应该为0或1）
+            const queueSize = isCheckingBalance ? 1 : 0;
+            
+            // 更新统计卡片
+            document.getElementById('statGenerated').textContent = scanCounter;
+            document.getElementById('statChecked').textContent = validCheckedCounter;
+            document.getElementById('statWithBalance').textContent = foundCounter;
+            document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
+            document.getElementById('statSpeed').textContent = speed;
+            document.getElementById('statUptime').textContent = `${elapsedSeconds}s`;
+            document.getElementById('statSuccessRate').textContent = `${successRate}%`;
+            document.getElementById('statQueueSize').textContent = queueSize;
+            
+            // 更新API信息区域
+            document.getElementById('apiGenerated').textContent = scanCounter;
+            document.getElementById('apiChecked').textContent = validCheckedCounter;
+            document.getElementById('apiSuccessRate').textContent = `${successRate}%`;
+            document.getElementById('apiRuntime').textContent = `${elapsedSeconds}s`;
+            
+            // 更新队列显示
+            document.getElementById('queueCount').textContent = queueSize;
+            
+            // 更新总BTC显示
+            document.getElementById('totalBTC').textContent = totalBTC.toFixed(8) + ' BTC';
+            
+            // 更新当前扫描编号
+            document.getElementById('currentScanNumber').textContent = `#${scanCounter}`;
         }
 
         // ==================== UI更新函数 ====================
@@ -2483,7 +2697,7 @@
             document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
             document.getElementById('currentScanNumber').textContent = `#${addressData.id}`;
             document.getElementById('currentStatus').textContent = '检查余额中';
-            document.getElementById('currentStatus').style.color = '#f3bf40';
+            document.getElementById('currentStatus').style.color = '#ff9500';
         }
 
         function updateCurrentScan(result) {
@@ -2497,18 +2711,18 @@
                 balanceElement.textContent = '查询失败';
                 balanceElement.className = 'balance-value balance-failed';
                 document.getElementById('currentStatus').textContent = '查询失败';
-                document.getElementById('currentStatus').style.color = '#da3633';
+                document.getElementById('currentStatus').style.color = '#ff3b30';
             } else if (result.balance > 0) {
                 const balanceInBTC = (result.balance / 100000000).toFixed(8);
                 balanceElement.textContent = `${balanceInBTC} BTC`;
                 balanceElement.className = 'balance-value balance-positive';
                 document.getElementById('currentStatus').textContent = '发现余额！';
-                document.getElementById('currentStatus').style.color = '#3fb950';
+                document.getElementById('currentStatus').style.color = '#34c759';
             } else {
                 balanceElement.textContent = '0 BTC';
                 balanceElement.className = 'balance-value balance-zero';
                 document.getElementById('currentStatus').textContent = '零余额';
-                document.getElementById('currentStatus').style.color = '#7d8590';
+                document.getElementById('currentStatus').style.color = '#888';
             }
             
             document.getElementById('currentTime').textContent = result.timestamp;
@@ -2526,23 +2740,22 @@
 
         function updateApiDisplay() {
             const currentApiEl = document.getElementById('currentApi');
-            const provider = apiProviders[currentApiIndex];
+            const providerIndex = currentApiIndex % currentApiCount;
+            const provider = apiProviders[providerIndex];
             if (provider) {
                 const successRate = provider.attempts > 0 ? 
                     Math.round((provider.success / provider.attempts) * 100) : 100;
                 currentApiEl.textContent = `${provider.name} (${successRate}%)`;
                 currentApiEl.className = 'api-provider active';
+                
+                // 更新索引显示
+                document.getElementById('currentApiIndexDisplay').textContent = currentApiIndex;
             }
         }
 
         function updateQueueInfo() {
-            const actualPending = Math.max(0, scanCounter - checkedCounter);
-            
-            document.getElementById('queueCount').textContent = actualPending;
-            document.getElementById('statQueueSize').textContent = actualPending;
-            
-            const progress = checkedCounter > 0 ? Math.round((checkedCounter / scanCounter) * 100) : 0;
-            console.log(`进度: ${checkedCounter}/${scanCounter} (${progress}%), 待检测: ${actualPending}`);
+            const queueSize = isCheckingBalance ? 1 : 0;
+            document.getElementById('queueCount').textContent = queueSize;
         }
 
         function updateReconnectButton(connecting) {
@@ -2560,34 +2773,9 @@
             const successRate = apiTotalAttempts > 0 ? 
                 Math.round((apiTotalSuccess / apiTotalAttempts) * 100) : 100;
             document.getElementById('apiSuccessRate').textContent = `${successRate}%`;
-            document.getElementById('statSuccessRate').textContent = `${successRate}%`;
         }
 
         function updateTotalBTC() {
-            document.getElementById('totalBTC').textContent = totalBTC.toFixed(8) + ' BTC';
-        }
-
-        function updateStats() {
-            const elapsedSeconds = scanStartTime ? Math.floor((Date.now() - scanStartTime) / 1000) : 0;
-            const speed = elapsedSeconds > 0 ? (scanCounter / elapsedSeconds).toFixed(1) : '0.0';
-            
-            document.getElementById('statGenerated').textContent = scanCounter;
-            document.getElementById('statChecked').textContent = checkedCounter;
-            document.getElementById('statWithBalance').textContent = foundCounter;
-            document.getElementById('statTotalBTC').textContent = totalBTC.toFixed(8);
-            document.getElementById('statSpeed').textContent = speed;
-            document.getElementById('statUptime').textContent = `${elapsedSeconds}s`;
-            
-            document.getElementById('apiGenerated').textContent = scanCounter;
-            document.getElementById('apiChecked').textContent = checkedCounter;
-            document.getElementById('apiRuntime').textContent = `${elapsedSeconds}s`;
-            
-            // 修复成功率计算：成功率 = 成功检测数 / 总检测数
-            const successRate = checkedCounter > 0 ? 
-                Math.round((checkedCounter / scanCounter) * 100) : 0;
-            document.getElementById('statSuccessRate').textContent = `${successRate}%`;
-            document.getElementById('apiSuccessRate').textContent = `${successRate}%`;
-            
             document.getElementById('totalBTC').textContent = totalBTC.toFixed(8) + ' BTC';
         }
 
@@ -2602,7 +2790,7 @@
         function clearPatrolView() {
             document.getElementById('patrolTableBody').innerHTML = `
                 <tr>
-                    <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                    <td colspan="5" style="text-align: center; padding: 60px; color: #888; font-size: 1.1rem;">
                         🚀 准备就绪，点击"开始扫描"按钮启动BTC地址扫描
                     </td>
                 </tr>
@@ -2646,7 +2834,7 @@
             if (filteredResults.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="5" style="text-align: center; padding: 60px; color: #7d8590; font-size: 1.1rem;">
+                        <td colspan="5" style="text-align: center; padding: 60px; color: #888; font-size: 1.1rem;">
                             🔍 没有找到匹配的结果
                         </td>
                     </tr>
@@ -2757,7 +2945,7 @@
             
             if (balancesWithBTC.length === 0) {
                 foundBalancesList.innerHTML = `
-                    <div style="text-align: center; color: #7d8590; padding: 40px; font-size: 1.1rem;">
+                    <div style="text-align: center; color: #888; padding: 40px; font-size: 1.1rem;">
                         💡 尚未发现任何BTC余额，扫描继续进行中...
                     </div>
                 `;
@@ -2782,15 +2970,15 @@
                             </div>
                             <div class="balance-detail-row">
                                 <div class="balance-detail-label">地址:</div>
-                                <div class="balance-detail-value" style="color: #58a6ff;">${item.address}</div>
+                                <div class="balance-detail-value" style="color: #64d2ff;">${item.address}</div>
                             </div>
                             <div class="balance-detail-row">
                                 <div class="balance-detail-label">私钥:</div>
-                                <div class="balance-detail-value" style="color: #d2a8ff; font-family: monospace; font-size: 0.85rem;">${item.privateKey}</div>
+                                <div class="balance-detail-value" style="color: #d4a5ff; font-family: monospace; font-size: 0.85rem;">${item.privateKey}</div>
                             </div>
                             <div class="balance-detail-row">
                                 <div class="balance-detail-label">助记词:</div>
-                                <div class="balance-detail-value" style="color: #ffcc00;">${item.words}</div>
+                                <div class="balance-detail-value" style="color: #007aff;">${item.words}</div>
                             </div>
                         </div>
                         <div class="balance-amount">
@@ -2931,13 +3119,13 @@ BTC地址信息 (ID: ${item.id}):
             `;
             
             if (type === 'success') {
-                notification.style.background = 'linear-gradient(135deg, rgba(63, 185, 80, 0.98) 0%, rgba(46, 160, 67, 0.98) 100%)';
+                notification.style.background = 'linear-gradient(135deg, rgba(52, 199, 89, 0.98) 0%, rgba(40, 167, 69, 0.98) 100%)';
             } else if (type === 'error') {
-                notification.style.background = 'linear-gradient(135deg, rgba(218, 54, 51, 0.98) 0%, rgba(248, 81, 73, 0.98) 100%)';
+                notification.style.background = 'linear-gradient(135deg, rgba(255, 59, 48, 0.98) 0%, rgba(220, 53, 69, 0.98) 100%)';
             } else if (type === 'warning') {
-                notification.style.background = 'linear-gradient(135deg, rgba(243, 191, 64, 0.98) 0%, rgba(245, 203, 98, 0.98) 100%)';
+                notification.style.background = 'linear-gradient(135deg, rgba(255, 149, 0, 0.98) 0%, rgba(255, 203, 98, 0.98) 100%)';
             } else {
-                notification.style.background = 'linear-gradient(135deg, rgba(255, 204, 0, 0.98) 0%, rgba(255, 170, 0, 0.98) 100%)';
+                notification.style.background = 'linear-gradient(135deg, rgba(0, 122, 255, 0.98) 0%, rgba(0, 212, 255, 0.98) 100%)';
             }
             
             notification.style.display = 'block';
@@ -2997,7 +3185,7 @@ BTC扫描统计信息:
 • 命中率: ${hitRate}%
 
 ⚡ 性能统计:
-• 当前速度: ${(1000 / generateSpeed).toFixed(1)} 个/秒
+• 当前速度: ${(1000 / checkInterval).toFixed(1)} 个/秒
 • 运行时间: ${elapsedSeconds} 秒
 • 扫描状态: ${isScanning ? (scanCounter > 0 ? '运行中' : '已暂停') : '已停止'}
 
@@ -3006,6 +3194,11 @@ BTC扫描统计信息:
 • 有余额记录: ${foundCounter}
 • 零余额记录: ${allResults.filter(r => r.balance === 0).length}
 • 查询失败: ${allResults.filter(r => r.status === 'failed').length}
+
+🔌 API统计:
+• 使用API数量: ${currentApiCount}
+• 当前API索引: ${currentApiIndex}
+• 已检查地址: ${currentCheckCount}/${checksPerApi}
             `.trim();
             
             alert(stats);
@@ -3058,6 +3251,7 @@ BTC扫描统计信息:
             
             initAlarmSound();
             setSpeed('1');
+            setApiCount(1);
             updateTotalBTC();
             updateQueueInfo();
             

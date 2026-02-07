@@ -1765,12 +1765,6 @@
         const maxRetries = 5;
         let apiSwitchCount = 0;
         
-        // 队列系统
-        let pendingAddresses = [];
-        let processingQueue = false;
-        const maxQueueSize = 100; // 增大队列大小
-        let currentApiIndex = 0;
-        
         // 存储所有结果
         let allResults = [];
         let filteredResults = [];
@@ -1783,7 +1777,10 @@
         // 性能跟踪
         let scanStartTime = null;
         
-        // ==================== API管理系统（9个免费API源） ====================
+        // 是否正在检查余额
+        let isCheckingBalance = false;
+        
+        // ==================== API管理系统（优化的API源） ====================
         let apiProviders = [
             {
                 name: 'blockchain.info',
@@ -1873,48 +1870,6 @@
                 timeout: 5000
             },
             {
-                name: 'blockcypher',
-                url: (address) => `https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`,
-                parse: async (data) => {
-                    try {
-                        return {
-                            balance: data.balance || 0,
-                            received: data.total_received || 0,
-                            txCount: data.final_n_tx || 0,
-                            success: true
-                        };
-                    } catch (e) {
-                        return { balance: -1, success: false };
-                    }
-                },
-                active: true,
-                success: 0,
-                attempts: 0,
-                lastUsed: 0,
-                timeout: 4000
-            },
-            {
-                name: 'bitaps.com',
-                url: (address) => `https://api.bitaps.com/btc/v1/blockchain/address/state/${address}`,
-                parse: async (data) => {
-                    try {
-                        return {
-                            balance: data.data?.balance || 0,
-                            received: data.data?.receivedAmount || 0,
-                            txCount: data.data?.receivedCount || 0,
-                            success: true
-                        };
-                    } catch (e) {
-                        return { balance: -1, success: false };
-                    }
-                },
-                active: true,
-                success: 0,
-                attempts: 0,
-                lastUsed: 0,
-                timeout: 4000
-            },
-            {
                 name: 'btc.com',
                 url: (address) => `https://chain.api.btc.com/v3/address/${address}`,
                 parse: async (data) => {
@@ -1935,49 +1890,6 @@
                 attempts: 0,
                 lastUsed: 0,
                 timeout: 4000
-            },
-            {
-                name: 'sochain',
-                url: (address) => `https://sochain.com/api/v2/get_address_balance/BTC/${address}`,
-                parse: async (data) => {
-                    try {
-                        const balance = parseFloat(data.data.confirmed_balance) * 100000000;
-                        return {
-                            balance: balance || 0,
-                            received: balance || 0,
-                            txCount: 0,
-                            success: true
-                        };
-                    } catch (e) {
-                        return { balance: -1, success: false };
-                    }
-                },
-                active: true,
-                success: 0,
-                attempts: 0,
-                lastUsed: 0,
-                timeout: 5000
-            },
-            {
-                name: 'blockstream.info',
-                url: (address) => `https://blockstream.info/api/address/${address}`,
-                parse: async (data) => {
-                    try {
-                        return {
-                            balance: data.chain_stats.funded_txo_sum - data.chain_stats.spent_txo_sum || 0,
-                            received: data.chain_stats.funded_txo_sum || 0,
-                            txCount: data.chain_stats.tx_count || 0,
-                            success: true
-                        };
-                    } catch (e) {
-                        return { balance: -1, success: false };
-                    }
-                },
-                active: true,
-                success: 0,
-                attempts: 0,
-                lastUsed: 0,
-                timeout: 5000
             }
         ];
 
@@ -2026,7 +1938,7 @@
             
             if (isScanning) {
                 clearInterval(generateInterval);
-                generateInterval = setInterval(generateNext, generateSpeed);
+                generateInterval = setInterval(generateAndCheck, generateSpeed);
             }
             
             console.log(`速度设置为: ${displayText}个/秒, 间隔: ${generateSpeed}ms`);
@@ -2259,9 +2171,6 @@
             
             if (success) {
                 console.log("重连成功，API数量:", apiProviders.filter(p => p.active).length);
-                if (pendingAddresses.length > 0 && !processingQueue) {
-                    startQueueProcessing();
-                }
                 return true;
             } else {
                 retryCount++;
@@ -2287,56 +2196,125 @@
             reconnectAPI();
         }
 
-        // ==================== 队列处理 ====================
-        function addToQueue(addressData) {
-            if (pendingAddresses.length >= maxQueueSize) {
-                console.log(`队列已满 (${maxQueueSize})，等待处理中...`);
-                return false;
-            }
+        // ==================== 扫描控制 ====================
+        function startScanner() {
+            if (isScanning) return;
             
-            pendingAddresses.push(addressData);
-            updateQueueInfo();
-            
-            updateCurrentScanFromQueue();
-            
-            if (apiConnected && !processingQueue && pendingAddresses.length > 0) {
-                startQueueProcessing();
-            }
-            
-            return true;
-        }
-
-        function startQueueProcessing() {
-            if (processingQueue || !apiConnected || pendingAddresses.length === 0) return;
-            
-            processingQueue = true;
-            console.log("开始处理队列，长度:", pendingAddresses.length);
-            
-            checkInterval = setInterval(processNextAddress, 1000);
-        }
-
-        function stopQueueProcessing() {
-            processingQueue = false;
-            if (checkInterval) {
-                clearInterval(checkInterval);
-                checkInterval = null;
-            }
-        }
-
-        async function processNextAddress() {
-            if (!apiConnected || pendingAddresses.length === 0) {
-                stopQueueProcessing();
+            if (!apiConnected) {
+                alert('请先等待API连接成功再开始扫描');
                 return;
             }
             
-            const addressData = pendingAddresses.shift();
-            updateQueueInfo();
+            isScanning = true;
+            scanStartTime = Date.now();
             
-            if (!addressData) return;
+            scanCounter = 0;
+            checkedCounter = 0;
+            foundCounter = 0;
+            totalBTC = 0;
+            allResults = [];
+            
+            updateStats();
+            updateQueueInfo();
+            updateFoundBalances();
+            clearPatrolView();
+            
+            const startButton = document.getElementById('startButton');
+            const startText = document.getElementById('startText');
+            startText.textContent = '扫描中...';
+            
+            startButton.style.display = 'none';
+            document.getElementById('pauseButton').style.display = 'flex';
+            document.getElementById('continueButton').style.display = 'none';
+            
+            // 立即开始第一个扫描
+            generateAndCheck();
+            
+            console.log(`扫描已开始，速度: ${1000/generateSpeed}个/秒`);
+        }
+
+        function pauseScanner() {
+            if (!isScanning) return;
+            
+            isScanning = false;
+            if (generateInterval) {
+                clearInterval(generateInterval);
+                generateInterval = null;
+            }
+            
+            document.getElementById('pauseButton').style.display = 'none';
+            document.getElementById('continueButton').style.display = 'flex';
+            
+            const startText = document.getElementById('startText');
+            startText.textContent = '开始扫描';
+            
+            console.log("扫描已暂停");
+        }
+
+        function continueScanner() {
+            if (isScanning) return;
+            
+            if (!apiConnected) {
+                alert('请先等待API连接成功再继续扫描');
+                return;
+            }
+            
+            isScanning = true;
+            
+            const startButton = document.getElementById('startButton');
+            const startText = document.getElementById('startText');
+            startText.textContent = '扫描中...';
+            
+            startButton.style.display = 'none';
+            document.getElementById('pauseButton').style.display = 'flex';
+            document.getElementById('continueButton').style.display = 'none';
+            
+            // 立即开始下一个扫描
+            generateAndCheck();
+            
+            console.log(`扫描继续，速度: ${1000/generateSpeed}个/秒`);
+        }
+
+        async function generateAndCheck() {
+            if (!isScanning || isCheckingBalance) return;
+            
+            isCheckingBalance = true;
+            scanCounter++;
+            
+            // 使用buidl.js随机生成助记词和地址
+            let words, address, privateKey;
             
             try {
-                updateCurrentScanBeforeCheck(addressData);
+                const newmnemo = buidl.newMnemonic();
+                words = newmnemo.words;
                 
+                const hdseed = buidl.mnemonic2SeedHex(words);
+                const addr = buidl.fromHDSeed(hdseed.seedHex, 0, 0, 0);
+                address = addr.addr;
+                privateKey = addr.pk;
+            } catch (error) {
+                console.error('生成助记词失败:', error);
+                words = '生成错误';
+                address = 'N/A';
+                privateKey = 'N/A';
+            }
+            
+            const addressData = {
+                id: scanCounter,
+                words: words,
+                address: address,
+                privateKey: privateKey
+            };
+            
+            // 更新当前扫描显示
+            updateCurrentScanBeforeCheck(addressData);
+            
+            document.getElementById('statGenerated').textContent = scanCounter;
+            document.getElementById('apiGenerated').textContent = scanCounter;
+            document.getElementById('currentScanNumber').textContent = `#${scanCounter}`;
+            
+            try {
+                // 立即检查余额
                 const balanceInfo = await checkBalanceFast(addressData.address);
                 
                 if (balanceInfo.success) {
@@ -2401,175 +2379,53 @@
                     allResults.unshift(failedResult);
                     updateCurrentScan(failedResult);
                     
-                    if (apiConnected && !balanceInfo.apiSuccess) {
+                    if (!balanceInfo.apiSuccess) {
                         console.log("API检查失败，可能已断开");
                         apiConnected = false;
                         updateApiStatus('检查失败', 'offline');
-                        stopQueueProcessing();
-                        pendingAddresses.unshift(addressData);
-                        updateQueueInfo();
+                        pauseScanner();
                         setTimeout(reconnectAPI, 3000);
-                    } else {
-                        pendingAddresses.unshift(addressData);
-                        updateQueueInfo();
                     }
                 }
                 
             } catch (error) {
-                console.error('处理地址失败:', error);
-                pendingAddresses.unshift(addressData);
-                updateQueueInfo();
+                console.error('检查余额失败:', error);
+                
+                const failedResult = {
+                    id: addressData.id,
+                    words: addressData.words,
+                    address: addressData.address,
+                    privateKey: addressData.privateKey,
+                    balance: -1,
+                    received: 0,
+                    txCount: 0,
+                    timestamp: new Date().toLocaleTimeString(),
+                    date: new Date().toISOString(),
+                    status: 'failed'
+                };
+                
+                currentData = failedResult;
+                allResults.unshift(failedResult);
+                updateCurrentScan(failedResult);
                 
                 if (apiConnected) {
                     apiConnected = false;
                     updateApiStatus('处理错误', 'offline');
-                    stopQueueProcessing();
+                    pauseScanner();
                     setTimeout(reconnectAPI, 3000);
                 }
             }
-        }
-
-        // ==================== 扫描控制 ====================
-        function startScanner() {
-            if (isScanning) return;
             
-            if (!apiConnected) {
-                alert('请先等待API连接成功再开始扫描');
-                return;
-            }
+            isCheckingBalance = false;
             
-            isScanning = true;
-            scanStartTime = Date.now();
-            
-            scanCounter = 0;
-            checkedCounter = 0;
-            foundCounter = 0;
-            totalBTC = 0;
-            allResults = [];
-            pendingAddresses = [];
-            
-            updateStats();
-            updateQueueInfo();
-            updateFoundBalances();
-            clearPatrolView();
-            
-            const startButton = document.getElementById('startButton');
-            const startText = document.getElementById('startText');
-            startText.textContent = '扫描中...';
-            
-            startButton.style.display = 'none';
-            document.getElementById('pauseButton').style.display = 'flex';
-            document.getElementById('continueButton').style.display = 'none';
-            
-            generateNext();
-            generateInterval = setInterval(generateNext, generateSpeed);
-            
-            console.log(`高速扫描已开始，速度: ${1000/generateSpeed}个/秒`);
-        }
-
-        function pauseScanner() {
-            if (!isScanning) return;
-            
-            isScanning = false;
-            if (generateInterval) {
+            // 设置定时器进行下一个扫描
+            if (isScanning) {
                 clearInterval(generateInterval);
-                generateInterval = null;
+                generateInterval = setInterval(generateAndCheck, generateSpeed);
             }
-            
-            document.getElementById('pauseButton').style.display = 'none';
-            document.getElementById('continueButton').style.display = 'flex';
-            
-            const startText = document.getElementById('startText');
-            startText.textContent = '开始扫描';
-            
-            console.log("扫描已暂停，队列继续处理");
-        }
-
-        function continueScanner() {
-            if (isScanning) return;
-            
-            if (!apiConnected) {
-                alert('请先等待API连接成功再继续扫描');
-                return;
-            }
-            
-            isScanning = true;
-            
-            const startButton = document.getElementById('startButton');
-            const startText = document.getElementById('startText');
-            startText.textContent = '扫描中...';
-            
-            startButton.style.display = 'none';
-            document.getElementById('pauseButton').style.display = 'flex';
-            document.getElementById('continueButton').style.display = 'none';
-            
-            generateNext();
-            generateInterval = setInterval(generateNext, generateSpeed);
-            
-            console.log(`扫描继续，速度: ${1000/generateSpeed}个/秒`);
-        }
-
-        function generateNext() {
-            if (!isScanning) return;
-            
-            scanCounter++;
-            
-            // 使用buidl.js随机生成助记词和地址
-            let words, address, privateKey;
-            
-            try {
-                const newmnemo = buidl.newMnemonic();
-                words = newmnemo.words;
-                
-                const hdseed = buidl.mnemonic2SeedHex(words);
-                const addr = buidl.fromHDSeed(hdseed.seedHex, 0, 0, 0);
-                address = addr.addr;
-                privateKey = addr.pk;
-            } catch (error) {
-                console.error('生成助记词失败:', error);
-                words = '生成错误';
-                address = 'N/A';
-                privateKey = 'N/A';
-            }
-            
-            const addressData = {
-                id: scanCounter,
-                words: words,
-                address: address,
-                privateKey: privateKey
-            };
-            
-            const added = addToQueue(addressData);
-            
-            if (!added) {
-                setTimeout(generateNext, 100);
-                return;
-            }
-            
-            document.getElementById('statGenerated').textContent = scanCounter;
-            document.getElementById('apiGenerated').textContent = scanCounter;
-            document.getElementById('currentScanNumber').textContent = `#${scanCounter}`;
-            
-            updateQueueInfo();
         }
 
         // ==================== UI更新函数 ====================
-        function updateCurrentScanFromQueue() {
-            if (pendingAddresses.length > 0) {
-                const firstInQueue = pendingAddresses[0];
-                
-                document.getElementById('currentMnemonic').textContent = firstInQueue.words;
-                document.getElementById('currentAddress').textContent = firstInQueue.address;
-                document.getElementById('currentPrivateKey').textContent = firstInQueue.privateKey;
-                document.getElementById('currentBalance').textContent = '等待检测...';
-                document.getElementById('currentBalance').className = 'balance-value balance-zero';
-                document.getElementById('currentTime').textContent = '等待中...';
-                document.getElementById('currentScanNumber').textContent = `#${firstInQueue.id}`;
-                document.getElementById('currentStatus').textContent = '等待检测';
-                document.getElementById('currentStatus').style.color = '#7d8590';
-            }
-        }
-
         function updateCurrentScanBeforeCheck(addressData) {
             document.getElementById('currentMnemonic').textContent = addressData.words;
             document.getElementById('currentAddress').textContent = addressData.address;
@@ -3001,7 +2857,7 @@ BTC地址信息 (ID: ${item.id}):
 私钥: ${item.privateKey}
 余额: ${item.balance > 0 ? (item.balance / 100000000).toFixed(8) + ' BTC' : '0 BTC'}
 时间: ${item.timestamp}
-状态: ${item.status === 'positive' ? '有余额' : item.status === 'failed' ? '查询失败' : '零余额'}
+状态: ${item.status === 'positive' ? '有余额' : item.status === 'failed' ? '检测失败' : '零余额'}
                 `.trim();
                 
                 navigator.clipboard.writeText(data)
